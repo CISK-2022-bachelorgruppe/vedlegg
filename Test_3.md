@@ -128,7 +128,7 @@ php-apache   Deployment/php-apache   57%/50%    1         10        7          3
 php-apache   Deployment/php-apache   43%/50%   1         10        7          3m21s
 php-apache   Deployment/php-apache   51%/50%   1         10        7          3m30s
 ```
-## 7. Stopp busybox:
+## 7. Stopp lasten busybox genererer:
 ```
 $ <ctr> + c
 ```
