@@ -14,6 +14,11 @@ For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet
 ```
 $ minikube addons enable metrics-server
 ```
+Svar fra kommandoen:
+```
+    ▪ Using image k8s.gcr.io/metrics-server/metrics-server:v0.4.2
+🌟  The 'metrics-server' addon is enabled
+```
 For å se om metrics-server fungerer:
 ```
 $ kubectl top pods -n kube-system            
