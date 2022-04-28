@@ -60,35 +60,73 @@ storage-provisioner                2m           9Mi
 ```
 $ kubectl apply -f php-apache.yaml
 ```
+
+Svar fra kommandoen:
+```
+deployment.apps/php-apache created
+service/php-apache created
+```
+
 ## 4. Lag den horisontalepodautoskalereren og sjekk current status:
 ```
-$ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+$ kubectl apply -f hpa-php-apache.yaml
 ```
+Svar fra kommandoen:
+```
+horizontalpodautoscaler.autoscaling/php-apache created
+```
+
 Sjekk status til HPA:
 ```
 $ kubectl get hpa
 ```
 Dette kan ta ett minutt eller to før den registreres.
+Svar fra kommandoen med engang:
+```
+NAME         REFERENCE               TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+php-apache   Deployment/php-apache   **<unknown>**/50%   1         10        0          12s
+```
+Svar fra kommandoen etter ett minutt:
+```
+NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+php-apache   Deployment/php-apache   **0%**/50%    1         10        1          70s
+```
+
 ### 4.1 andre muligheter for HPA:
 ```
-$ kubectl apply -f hpa-php-apache.yaml
+$ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
 ```
-Denne filen gjør akkurat det samme som kommandoen over.
-
+Denne komandoen gjør akkurat det samme som filen over.
 ## 5. Generer en last med busybox i et nytt terminalvindu:
 ```
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
+```
+Svar fra kommandoen:
+```
+
 ```
 ## 6. Overvåk HPA i den første terminalvinduet:
 ```
 $ kubectl get hpa php-apache --watch
 ```
+Svar fra kommandoen:
+```
+
+```
 ## 7. Stopp busybox:
 ```
 $ <ctr> + c
+```
+Svar fra kommandoen:
+```
+
 ```
 ## 8. Overvåk HPA og se den skalere ned:
 ```
 $ kubectl get hpa php-apache --watch  
 ```
 Når HPA detekterer at CPU=0% skalerer den automatisk ned til 1 replika. Dette kan ta noen minutter.
+Svar fra kommandoen:
+```
+
+```
