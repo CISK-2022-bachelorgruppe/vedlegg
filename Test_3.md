@@ -9,14 +9,26 @@ For at man skal kunne gjengi testen 100% må `hpa-php-apache.yaml` og `php-apach
 ```
 $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10s
 ```
-For at metrics-server skal fungere må `--extra-config=kubelet.housekeeping-interval=10s` være med under oppstart av minikube
+For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet.housekeeping-interval=10s` være med under oppstart av minikube.
 ## 2. Start den innebygde tilleggsfunksjonen 'metrics-server' i minikube:
 ```
 $ minikube addons enable metrics-server
 ```
-Se om metrics-server fungerer:
+For å se om metrics-server fungerer:
 ```
 $ kubectl top pods -n kube-system            
+```
+Svar fra kommandoen vil være noe lik denne:
+```
+NAME                               CPU(cores)   MEMORY(bytes)   
+coredns-64897985d-q52bj            3m           13Mi            
+etcd-minikube                      25m          48Mi            
+kube-apiserver-minikube            81m          263Mi           
+kube-controller-manager-minikube   32m          48Mi            
+kube-proxy-zrn6b                   1m           10Mi            
+kube-scheduler-minikube            4m           16Mi            
+metrics-server-6b76bd68b6-g5klg    6m           17Mi            
+storage-provisioner                2m           9Mi    
 ```
 ## 3. Deployer php-apache.yaml
 ```
