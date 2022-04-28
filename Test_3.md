@@ -80,38 +80,53 @@ Sjekk status til HPA:
 ```
 $ kubectl get hpa
 ```
-Dette kan ta ett minutt eller to før den registreres.
+Dette kan ta ett minutt eller to før den registreres. Legg merke til `<unknown>` og `<0%>`, den fungerer når det vises `<0%>`
 Svar fra kommandoen med engang:
 ```
 NAME         REFERENCE               TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-php-apache   Deployment/php-apache   **<unknown>**/50%   1         10        0          12s
+php-apache   Deployment/php-apache   <unknown>/50%   1         10        0          12s
 ```
 Svar fra kommandoen etter ett minutt:
 ```
 NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
-php-apache   Deployment/php-apache   **0%**/50%    1         10        1          70s
+php-apache   Deployment/php-apache   0%/50%    1         10        1          70s
 ```
 
 ### 4.1 andre muligheter for HPA:
 ```
 $ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
 ```
-Denne komandoen gjør akkurat det samme som filen over.
+Denne komandoen gjør akkurat det samme som filen over, men den blir ikke utført i denne testen.
+
 ## 5. Generer en last med busybox i et nytt terminalvindu:
 ```
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
 Svar fra kommandoen:
 ```
-
+If you don't see a command prompt, try pressing enter.
+OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!
 ```
 ## 6. Overvåk HPA i den første terminalvinduet:
 ```
 $ kubectl get hpa php-apache --watch
 ```
-Svar fra kommandoen:
-```
+Denne kommandoen kjøres på et intervall på 15 sekunder.
 
+Svar fra kommandoen etter noen minutter:
+```
+NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+php-apache   Deployment/php-apache   0%/50%    1         10        1          58s
+php-apache   Deployment/php-apache   132%/50%   1         10        1          75s
+php-apache   Deployment/php-apache   171%/50%   1         10        3          90s
+php-apache   Deployment/php-apache   157%/50%   1         10        4          105s
+php-apache   Deployment/php-apache   61%/50%    1         10        4          2m
+php-apache   Deployment/php-apache   65%/50%    1         10        4          2m15s
+php-apache   Deployment/php-apache   78%/50%    1         10        4          2m30s
+php-apache   Deployment/php-apache   72%/50%    1         10        7          2m45s
+php-apache   Deployment/php-apache   57%/50%    1         10        7          3m
+php-apache   Deployment/php-apache   43%/50%   1         10        7          3m21s
+php-apache   Deployment/php-apache   51%/50%   1         10        7          3m30s
 ```
 ## 7. Stopp busybox:
 ```
@@ -119,8 +134,10 @@ $ <ctr> + c
 ```
 Svar fra kommandoen:
 ```
-
+OK!OK!OK!OK!OK!^Cpod "load-generator" deleted
+pod default/load-generator terminated (Error)`
 ```
+    
 ## 8. Overvåk HPA og se den skalere ned:
 ```
 $ kubectl get hpa php-apache --watch  
@@ -128,5 +145,13 @@ $ kubectl get hpa php-apache --watch
 Når HPA detekterer at CPU=0% skalerer den automatisk ned til 1 replika. Dette kan ta noen minutter.
 Svar fra kommandoen:
 ```
-
+NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+php-apache   Deployment/php-apache   42%/50%   1         10        7          4m46s
+php-apache   Deployment/php-apache   5%/50%    1         10        7          5m1s
+php-apache   Deployment/php-apache   0%/50%    1         10        7          5m16s
+php-apache   Deployment/php-apache   0%/50%    1         10        7          7m
+php-apache   Deployment/php-apache   0%/50%    1         10        7          7m52s
+php-apache   Deployment/php-apache   0%/50%    1         10        7          9m31s
+php-apache   Deployment/php-apache   0%/50%    1         10        6          9m46s
+php-apache   Deployment/php-apache   0%/50%    1         10        1          10m
 ```
