@@ -10,6 +10,27 @@ For at man skal kunne gjengi testen 100% må `hpa-php-apache.yaml` og `php-apach
 $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10s
 ```
 For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet.housekeeping-interval=10s` være med under oppstart av minikube.
+
+Svar fra kommandoen:
+```
+😄  minikube v1.25.1 on Ubuntu 20.04
+🎉  minikube 1.25.2 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.25.2
+💡  To disable this notice, run: 'minikube config set WantUpdateNotification false'
+
+
+✨  Using the docker driver based on existing profile
+👍  Starting control plane node minikube in cluster minikube
+🚜  Pulling base image ...
+🏃  Updating the running docker "minikube" container ...
+🐳  Preparing Kubernetes v1.23.1 on Docker 20.10.12 ...
+    ▪ kubelet.housekeeping-interval=10s
+🔎  Verifying Kubernetes components...
+    ▪ Using image k8s.gcr.io/metrics-server/metrics-server:v0.4.2
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass, metrics-server
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+```
+
 ## 2. Start den innebygde tilleggsfunksjonen 'metrics-server' i minikube:
 ```
 $ minikube addons enable metrics-server
