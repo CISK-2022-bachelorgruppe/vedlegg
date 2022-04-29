@@ -1,23 +1,34 @@
 # VEDLEGG CCC - Test 3: HorizontalPodAutoscaling (HPA):
+Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+
+Innhold:
+- Innledende informasjon om Test 3
+- Gjennomføring av Test 3
+- Forklaring av teknsik innhold
+
+ 
 
 
+# 1. Innledende informasjon om Test 3:
+Denne testen vil ikke ta for seg vår egenproduserte applikasjon. Grunnen til dette er fordi applikasjonen består av flere variabler som kan påvirke testen og igjen kan bli unødvedig komplisert for demonstrere at den horisontal autoskaleringsfunksjonen i Kubernetes fungerer. For simpelhetens skyld vil denne testen benytte seg av en Deployment som eksekverer en konteiner som igjen bruker et php-apache image hentet fra DockerHub, og eksponerer denne som en Serivce. Dette kommer frem i php-apache.yaml. Denne php-apache serveren vil bli eksekvert sammen med hpa-php-apache.yaml. Deretter vil det bli generert en last som sender forespørseler til php-apache servicen i en uendelig løkke. Etter en stund skal lasten avsluttes manuelt.
 
-# Gjennomføring av test 3:
-Denne testen er basert på https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+# 2. Gjennomføring av Test 3:
 
 ### Pre-install:
+- Kubernetes cluster --> minikube
+- Kubectl
 - Docker
 
 
-## Fremgangsmåte for å få like resultater:
+## 2.1 For å få like resultater:
 1. Åpne to Terminalvinduer, heretter referert til Terminal A og Terminal B 
 2. Følg testinstruksene under frem til punkt `6. Overvåk HPA i Terminal A:`
 3. Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
 4. Deretter følges testinstruksene videre fra punkt `7. Stopp lasten busybox genererer i Terminal B:`
 5. Overvåk autoskaleringen frem til den går ned til én replika.
 
-
-## 1. Start minikube med denne kommandoen i Terminal A:
+## 2.2 Fremgangsmåte
+### 1. Start minikube med denne kommandoen i Terminal A:
 ```
 $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10s
 ```
@@ -43,7 +54,7 @@ Svar fra kommandoen:
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 ```
 
-## 2. Start den innebygde tilleggsfunksjonen 'metrics-server' i minikube:
+### 2. Start den innebygde tilleggsfunksjonen 'metrics-server' i minikube:
 ```
 $ minikube addons enable metrics-server
 ```
@@ -68,7 +79,7 @@ kube-scheduler-minikube            4m           16Mi
 metrics-server-6b76bd68b6-g5klg    6m           17Mi            
 storage-provisioner                2m           9Mi    
 ```
-## 3. Deployer php-apache.yaml
+### 3. start Deployment og eksponer Serivcen:
 ```
 $ kubectl apply -f php-apache.yaml
 ```
@@ -79,7 +90,7 @@ deployment.apps/php-apache created
 service/php-apache created
 ```
 
-## 4. Lag den horisontalepodautoskalereren og sjekk current status:
+### 4. Lag den horisontalepodautoskalereren og sjekk current status:
 ```
 $ kubectl apply -f hpa-php-apache.yaml
 ```
@@ -104,7 +115,7 @@ NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AG
 php-apache   Deployment/php-apache   0%/50%    1         10        1          70s
 ```
 
-## 5. Generer en last med busybox i Terminal B:
+### 5. Generer en last med busybox i Terminal B:
 ```
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
@@ -113,7 +124,7 @@ Svar fra kommandoen:
 If you don't see a command prompt, try pressing enter.
 OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!
 ```
-## 6. Overvåk HPA i Terminal A:
+### 6. Overvåk HPA i Terminal A:
 ```
 $ kubectl get hpa php-apache --watch
 ```
@@ -134,7 +145,7 @@ php-apache   Deployment/php-apache   57%/50%    1         10        7          3
 php-apache   Deployment/php-apache   43%/50%   1         10        7          3m21s
 php-apache   Deployment/php-apache   51%/50%   1         10        7          3m30s
 ```
-## 7. Stopp lasten busybox genererer i Terminal B:
+### 7. Stopp lasten busybox genererer i Terminal B:
 ```
 $ <ctr> + c
 ```
@@ -144,7 +155,7 @@ OK!OK!OK!OK!OK!^Cpod "load-generator" deleted
 pod default/load-generator terminated (Error)`
 ```
     
-## 8. Overvåk HPA i Terminal A og se den skalere ned:
+### 8. Overvåk HPA i Terminal A og se den skalere ned:
 ```
 $ kubectl get hpa php-apache --watch  
 ```
@@ -161,3 +172,32 @@ php-apache   Deployment/php-apache   0%/50%    1         10        7          9m
 php-apache   Deployment/php-apache   0%/50%    1         10        6          9m46s
 php-apache   Deployment/php-apache   0%/50%    1         10        1          10m
 ```
+
+# 3. Forklaring av teknisk innhold:
+Her blir det  en mer detaljert beskrivelse av de forskjellige tekniskekomponentene i testen. Det vil ikke bli gjort en detaljert linje-for-linje beskrivelse av .yaml-filene.
+
+## 3.1 php-apache.yaml
+Denne filen lager en Deployment og eksponerer den som en Serive. Deplymentet henter et ferdiglaget php-apache-image fra Docker Hub. Image er `k8s.gcr.io/hpa-example` og har php-image-versjon `php:5-apache` og er bygget opp slikt:
+```
+FROM php:5-apache
+COPY index.php /var/www/html/index.php
+RUN chmod a+rx index.php
+```
+Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye CPU. Dette er for å simulere lasten i clusteret vårt og er som følger:
+```
+<?php
+  $x ) 0.0001;
+  for ($i = 0; $i <= 1000000; $i++) {
+    4x += sqrt($x);
+  }
+  echo "OK!";
+?>
+```
+
+## 3.2 hpa-php-apache.yaml
+Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom 1 og 10 replikas av poder som blir kontrollert av Deploymenten php-apache. Denne autoskalerern vil da enten øke eller minke antall replikas for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle poder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikas baserer seg på forholdet mellom ønsket metriksverdi og gjeldende metriksverdi. Den forenklete algoritmen er som følger:
+```
+desiredReplicas = ceil[currentReplicas * ( currentMetricValue / desiredMetricValue )]
+```
+## 3.3 Last generering med Busybox
+
