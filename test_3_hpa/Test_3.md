@@ -115,7 +115,7 @@ NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AG
 php-apache   Deployment/php-apache   0%/50%    1         10        1          70s
 ```
 
-### 5. Generer en last med busybox i Terminal B:
+### 5. Generer mer last med busybox i Terminal B:
 ```
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
@@ -200,5 +200,5 @@ Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom 1 og
 ønsketReplikas = ceil[GjeldendeReolikas * ( GjeldendeMetriskVerdi / ØnsketMetriskVerdi )]
 ```
 Hvis skaleringsforholdet befinner seg nært 1.0 så vil control plane hoppe over skaleringen.
-## 3.3 Last generering med Busybox
-
+## 3.3 Lastgenerering med Busybox
+For å generere en økt last mot php-apache servicen, så blir dette utført via `kubectl run`-kommandoen. Denne lar oss eksekvere en lastgenerator som heter BusyBox. Her henter den image busybox:1.28. Videre utfører kommanoen en uendelig løkke som sender forespørsler til `http://php-apache`. 
