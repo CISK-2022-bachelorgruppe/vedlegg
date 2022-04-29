@@ -195,9 +195,10 @@ Koden over refererer til en `index.php`-side som utfører komplekse regnestykker
 ```
 
 ## 3.2 hpa-php-apache.yaml
-Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom 1 og 10 replikas av poder som blir kontrollert av Deploymenten php-apache. Denne autoskalerern vil da enten øke eller minke antall replikas for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle poder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikas baserer seg på forholdet mellom ønsket metriksverdi og gjeldende metriksverdi. Den forenklete algoritmen er som følger:
+Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom 1 og 10 replikas av poder som blir kontrollert av Deploymenten php-apache. Denne HPA-en vil da enten øke eller minke antall replikas for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle poder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikas baserer seg på forholdet mellom ønsket metriksverdi og gjeldende metriksverdi hentet fra `metrics-server`. Den forenklete algoritmen er som følger:
 ```
-desiredReplicas = ceil[currentReplicas * ( currentMetricValue / desiredMetricValue )]
+ønsketReplikas = ceil[GjeldendeReolikas * ( GjeldendeMetriskVerdi / ØnsketMetriskVerdi )]
 ```
+Hvis skaleringsforholdet befinner seg nært 1.0 så vil control plane hoppe over skaleringen.
 ## 3.3 Last generering med Busybox
 
