@@ -1,4 +1,4 @@
-# VEDLEGG CCC - Test 3: HorizontalPodAutoscaling (HPA):
+# VEDLEGG XXX - Test 3: HorizontalPodAutoscaling (HPA):
 Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
 
 Innhold:
