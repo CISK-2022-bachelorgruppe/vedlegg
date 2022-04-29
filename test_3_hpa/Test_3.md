@@ -1,12 +1,23 @@
-# Hvordan gjennomføre Test 3 - HorizontalPodAutoscaling (HPA):
+# VEDLEGG CCC - Test 3: HorizontalPodAutoscaling (HPA):
 
+
+
+# Gjennomføring av test 3:
 Denne testen er basert på https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
-
-For at man skal kunne gjengi testen 100% må `hpa-php-apache.yaml` og `php-apache.yaml` eksikveres og ikke kommandolinjene som inneholder `kubectl apply -f https://......`
 
 ### Pre-install:
 - Docker
-## 1. Start minikube med denne kommandoen:
+
+
+## Fremgangsmåte for å få like resultater:
+1. Åpne to Terminalvinduer, heretter referert til Terminal A og Terminal B 
+2. Følg testinstruksene under frem til punkt `6. Overvåk HPA i Terminal A:`
+3. Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
+4. Deretter følges testinstruksene videre fra punkt `7. Stopp lasten busybox genererer i Terminal B:`
+5. Overvåk autoskaleringen frem til den går ned til én replika.
+
+
+## 1. Start minikube med denne kommandoen i Terminal A:
 ```
 $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10s
 ```
@@ -93,13 +104,7 @@ NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AG
 php-apache   Deployment/php-apache   0%/50%    1         10        1          70s
 ```
 
-### 4.1 andre muligheter for HPA:
-```
-$ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
-```
-Denne komandoen gjør akkurat det samme som filen over, men den blir ikke utført i denne testen.
-
-## 5. Generer en last med busybox i et nytt terminalvindu:
+## 5. Generer en last med busybox i Terminal B:
 ```
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
@@ -108,7 +113,7 @@ Svar fra kommandoen:
 If you don't see a command prompt, try pressing enter.
 OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!
 ```
-## 6. Overvåk HPA:
+## 6. Overvåk HPA i Terminal A:
 ```
 $ kubectl get hpa php-apache --watch
 ```
@@ -129,7 +134,7 @@ php-apache   Deployment/php-apache   57%/50%    1         10        7          3
 php-apache   Deployment/php-apache   43%/50%   1         10        7          3m21s
 php-apache   Deployment/php-apache   51%/50%   1         10        7          3m30s
 ```
-## 7. Stopp lasten busybox genererer:
+## 7. Stopp lasten busybox genererer i Terminal B:
 ```
 $ <ctr> + c
 ```
@@ -139,7 +144,7 @@ OK!OK!OK!OK!OK!^Cpod "load-generator" deleted
 pod default/load-generator terminated (Error)`
 ```
     
-## 8. Overvåk HPA og se den skalere ned:
+## 8. Overvåk HPA i Terminal A og se den skalere ned:
 ```
 $ kubectl get hpa php-apache --watch  
 ```
