@@ -1,9 +1,9 @@
-# Introduksjon
+# 1. Introduksjon
 Dette er en detaljert veiledning i hvordan test 1 ble gjennomført! Denne fremgangsmåten går ut ifra at repoene tilknyttet testen er lastet ned til hjem-mappen på lab-PCen. "`~/`"
 <br>
 <br>
 
-# Fremgangsmåte
+# 2. Fremgangsmåte
 For å sikre at minikube ikke inneholder endrede filer som kan påvirke testingen, installeres minikube på nytt ved starten av hver test. Dette ble gjort med følgende kommandoer:
 ```
 $ minikube delete

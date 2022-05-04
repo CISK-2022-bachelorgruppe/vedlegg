@@ -1,16 +1,10 @@
-# VEDLEGG XXX - Test 3: HorizontalPodAutoscaling (HPA):
+# 1. Innledning
 Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
 
 Innhold:
-- Innledende informasjon om Test 3
+- Innledning
 - Gjennomføring av Test 3
 - Forklaring av teknsik innhold
-
- 
-
-
-# 1. Innledende informasjon om Test 3:
-Denne testen vil ikke ta for seg vår egenproduserte applikasjon. Grunnen til dette er fordi applikasjonen består av flere variabler som kan påvirke testen og igjen kan bli unødvedig komplisert for demonstrere at den horisontal autoskaleringsfunksjonen i Kubernetes fungerer. For simpelhetens skyld vil denne testen benytte seg av en Deployment som eksekverer en konteiner som igjen bruker et php-apache image hentet fra DockerHub, og eksponerer denne som en Serivce. Dette kommer frem i php-apache.yaml. Denne php-apache serveren vil bli eksekvert sammen med hpa-php-apache.yaml. Deretter vil det bli generert en last som sender forespørseler til php-apache servicen i en uendelig løkke. Etter en stund skal lasten avsluttes manuelt.
 
 # 2. Gjennomføring av Test 3:
 
