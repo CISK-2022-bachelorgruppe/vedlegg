@@ -13,17 +13,17 @@ $ minikube start --driver=docker
 
 Når minikube var ferdiginstallert, ble utrullingen av mysql-databasen og django-applikasjonen startet med:
 ```shell
-$ cd ~/kubernetes-config/mysql
+$ cd $HOME/kubernetes-config/mysql
 $ kubectl apply -k .
   
-$ cd ~/kubernetes-config/django
+$ cd $HOME/kubernetes-config/django
 $ kubectl apply -k .
 ```
 <br>
 
 Deretter ble sched-appen klargjort for kjøring i minikube. Dette gjøres med:
 ```shell
-$ cd ~/applikasjon/sched
+$ cd $HOME/applikasjon/sched
 $ eval \$(minikube docker-env)
 $ docker build -t sched .
 ```
@@ -31,12 +31,12 @@ $ docker build -t sched .
 
 For å starte selve testen med å tvangsstoppe podder og ta tiden på dette ble følgende kommandoer benyttet: 
 ```shell
-$ cd ~/applikasjon/pod-sletting/
+$ cd $HOME/applikasjon/pod-sletting/
 $ ./skript.sh
 ```
 <br>
 
-Testen vil lagre sine resultater i mappen du kjører _skript.sh_ ifra. Siden _skript.sh_ eksekveres fra mappen _~/applikasjon/pod-sletting/_ så vil resultatene legge seg i en mappe _~/applikasjon/pod-sletting/resultater/_
+Testen vil lagre sine resultater i mappen du kjører _skript.sh_ ifra. Siden _skript.sh_ eksekveres fra mappen _$HOME/applikasjon/pod-sletting/_ så vil resultatene legge seg i en mappe _$HOME/applikasjon/pod-sletting/resultater/_
 
 <br>
 
