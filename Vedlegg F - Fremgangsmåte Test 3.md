@@ -49,7 +49,7 @@ Svar fra kommandoen:
 ```
 
 ### 2. Start den innebygde tilleggsfunksjonen 'metrics-server' i minikube:
-```
+```shell
 $ minikube addons enable metrics-server
 ```
 Svar fra kommandoen:
@@ -58,7 +58,7 @@ Svar fra kommandoen:
 🌟  The 'metrics-server' addon is enabled
 ```
 For å se om metrics-server fungerer:
-```
+```shell
 $ kubectl top pods -n kube-system            
 ```
 Svar fra kommandoen vil være noe lik denne:
@@ -74,7 +74,7 @@ metrics-server-6b76bd68b6-g5klg    6m           17Mi
 storage-provisioner                2m           9Mi    
 ```
 ### 3. start Deployment og eksponer Serivcen:
-```
+```shell
 $ kubectl apply -f php-apache.yaml
 ```
 
@@ -85,7 +85,7 @@ service/php-apache created
 ```
 
 ### 4. Lag den horisontalepodautoskalereren og sjekk current status:
-```
+```shell
 $ kubectl apply -f hpa-php-apache.yaml
 ```
 Svar fra kommandoen:
@@ -94,7 +94,7 @@ horizontalpodautoscaler.autoscaling/php-apache created
 ```
 
 Sjekk status til HPA:
-```
+```shell
 $ kubectl get hpa
 ```
 Dette kan ta ett minutt eller to før den registreres. Legg merke til `<unknown>` og `<0%>`, den fungerer når det vises `<0%>`
@@ -110,7 +110,7 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          70
 ```
 
 ### 5. Generer mer last med busybox i Terminal B:
-```
+```shell
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
 Svar fra kommandoen:
@@ -119,7 +119,7 @@ If you don't see a command prompt, try pressing enter.
 OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!
 ```
 ### 6. Overvåk HPA i Terminal A:
-```
+```shell
 $ kubectl get hpa php-apache --watch
 ```
 Denne kommandoen kjøres på et intervall på 15 sekunder.
@@ -150,7 +150,7 @@ pod default/load-generator terminated (Error)`
 ```
     
 ### 8. Overvåk HPA i Terminal A og se den skalere ned:
-```
+```shell
 $ kubectl get hpa php-apache --watch  
 ```
 Når HPA detekterer at CPU=0% skalerer den automatisk ned til 1 replika. Dette kan ta noen minutter.

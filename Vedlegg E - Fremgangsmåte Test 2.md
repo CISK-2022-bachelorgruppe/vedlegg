@@ -38,3 +38,8 @@ $ curl $(minikube ip):30001
 ```
 
 Når kommandoen over returnerte en HTML side er oppsettet ferdig og testen er klar for å utføres.
+
+Da ble kommandoen under kjørt:
+```shell
+$ ./test-gjennomføring $(minikube ip) 30001 200 10 $HOME/git sj $HOME/git
+```
