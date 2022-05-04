@@ -44,7 +44,7 @@ echo \
 <br>
 
 Deretter installeres siste versjon av Docker Engine med følgende kommandoer:  
-> MERK: _Skal testen etterprøves, bør det spesifiseres hvilken versjon som skal lastes ned her, for å få samme versjon som ble benyttet under forsøket i dette prosjektet. Dette er for å skape et likt testmiljø_
+> **MERK:** _Skal testen etterprøves, bør det spesifiseres hvilken versjon som skal lastes ned her, for å få samme versjon som ble benyttet under forsøket i dette prosjektet. Dette er for å skape et likt testmiljø_
 ```
  sudo apt-get update
 
