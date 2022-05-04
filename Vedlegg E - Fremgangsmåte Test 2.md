@@ -1,12 +1,10 @@
-# Vedlegg X - Test 2
+# Introduksjon
 
-## Introduksjon
-
-Vedlegg X er en detaljert beskrivelse av både kode og gjennomføring til test 2.
+Vedlegg E er en detaljert beskrivelse av både kode og gjennomføring til test 2.
 
 Denne testen brukte den egenutviklede applikasjonen
 
-## Programvare
+# Programvare
 
 Programvarer utover det som er beskrevet i oppgaven.
 
@@ -16,7 +14,7 @@ Programvarer utover det som er beskrevet i oppgaven.
 | Requests (python pakke)       | 2.25.1   |
 | pip3                          | 20.3.4    |
 
-## Oppsett
+# Oppsett
 
 Som i test 1 slettes eventuelle tidligere minikube clustere for å sikre at det ikke ligger tidligere konfigurasjon som kan påvikre testingen. Deretter lages et nytt med docker som driver.
 
