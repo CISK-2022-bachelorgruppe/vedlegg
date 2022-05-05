@@ -44,7 +44,7 @@ Da ble kommandoene under kjørt:
 $ cd $HOME/git/CISK-2022-bachelorgruppe/applikasjoner/python-script-get
 $ ./test-gjennomføring $(minikube ip) 30001 200 10 $HOME/git sj $HOME/git
 ```
-### Forklaring av scriptene
+## 3.1 Forklaring av scriptene
 
 Dette er et script som vil gjøre hele testen selv. Det har tre `for`-løkker inne i hverandre som hører til antall pods, antall tråder og antall gjennomføringer. Nedenfor er et utkast av de viktigste linjene fra scriptet.
 
