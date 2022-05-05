@@ -37,7 +37,45 @@ $ ./skript.sh
 <br>
 
 Testen vil lagre sine resultater i mappen du kjører _skript.sh_ ifra. Siden _skript.sh_ eksekveres fra mappen _$HOME/applikasjon/pod-sletting/_ så vil resultatene legge seg i en mappe _$HOME/applikasjon/pod-sletting/resultater/_
-
 <br>
+<br>
+
+# 3. Gjennomføring
+**Ved testens start**
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/applikasjoner/main/pod-sletting/resultater/Bilder/Redigerte%20bilder/Bilde%201.png)
+<br>
+---
+<br>
+
+**Sched er deployert**
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/applikasjoner/main/pod-sletting/resultater/Bilder/Redigerte%20bilder/Bilde%202.png)
+<br>
+---
+<br>
+
+**Pod 5 er slettet**
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/applikasjoner/main/pod-sletting/resultater/Bilder/Redigerte%20bilder/Bilde%203.png)
+<br>
+---
+<br>
+
+**Pod 18 lages**
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/applikasjoner/main/pod-sletting/resultater/Bilder/Redigerte%20bilder/Bilde%204.png)
+<br>
+---
+<br>
+
+**Sched termineres**
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/applikasjoner/main/pod-sletting/resultater/Bilder/Redigerte%20bilder/Bilde%205.png)
+<br>
+---
+<br>
+
+**Testen er ferdig**
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/applikasjoner/main/pod-sletting/resultater/Bilder/Redigerte%20bilder/Bilde%206.png)
+<br>
+---
+<br>
+
 
 > **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden og kommentarene som er skrevet der._
