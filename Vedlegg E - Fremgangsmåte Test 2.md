@@ -68,7 +68,7 @@ for pod in {1..10}
         done
     done
 ```
-De viktigste linjene å legge merke til her er linje X og linje Y. Linje X skalerer opp antall podder mellom hver 100 gjennomføring av req.py scriptet mens linje Y gjør selve testen ved å ta tiden på hvor lenge det tar å gjennomføre 200 forespørsler med `$z` tråder mot `$pod` podder.
+De viktigste linjene å legge merke til her er linjen `minikube kubectl -- scale --replicas=$pod -f $path/k8s-bachelor/k8s-config/django/django-deployment.yaml` og linjen `/usr/bin/time -a -o "$fil" -f "%E" nice bash -c "python3 $path/bachelor-applikasjon/python-script-get/req.py --host $host --port $port --antall $foresporsler --thr $z"`. Den første skalerer opp antall podder mellom hver 100 gjennomføring av req.py scriptet mens den andre gjør selve testen ved å ta tiden på hvor lenge det tar å gjennomføre 200 forespørsler med `$z` tråder mot `$pod` podder.
 
 Nedenfor vises et utdrag av python scriptet. Som vist vil alle trådene sammarbeide om å nå 200 forespørsler. Rorespørslene fordeles ikke nødvendigvis likt utover trådene, men neste forespørsel blir delt ut til neste tråd som er ledig.
 De siste forespørslene er det `master`tråden som utfører selv for å sikre at det blir sendt akkuratt 200 forespørsler.
