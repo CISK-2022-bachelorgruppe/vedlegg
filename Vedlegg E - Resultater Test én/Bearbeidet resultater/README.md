@@ -1,13 +1,14 @@
 # Hva befinner seg i denne mappen?
 Innholdet i denne mappen er:
-* `./Bilder/`
+* `./Redigerte bilder/`
 * `./Utregninger.ods`
+* `./Utregninger.png`
 * `./slettede-podder-utenERROR [2022-04-29_142350].txt`
 <br>
 <br>
 
-## ./Biler
-Denne mappen inneholder bilder tatt underveis i testen. Dette er bilder som viser hvordan scriptet kjørte og hvordan CPU-kraften ble benyttet.
+## ./Redigerte biler
+Denne mappen inneholder bilder som er bearbeidet siden testen ble kjørt.
 
 <br>
 <br>
@@ -16,6 +17,13 @@ Denne mappen inneholder bilder tatt underveis i testen. Dette er bilder som vise
 Denne filen inneholder to ark, hvor det ene arket, med navn "Utsnitt", viser et utsnitt av databasen som ble opprettet under test én. Utsnittet inneholder raden hvor en pod blir terminert, i tillegg til tre rader over og under.
 <br>
 Det andre arket er "Oppsumering". Denne inneholder samme databasetabell som resultatet fra test én, men det er lagt inn en tabell som regner sammen ulike verdier.
+
+<br>
+<br>
+
+## ./Utregninger.png
+Dette bildet er et skjermbilde av utregningstabellen fra filen `./Utregninger.ods`
+
 
 <br>
 <br>
