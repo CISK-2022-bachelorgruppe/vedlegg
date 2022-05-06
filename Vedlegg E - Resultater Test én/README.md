@@ -5,7 +5,7 @@ Innholdet i denne mappen er:
 <br>
 <br>
 
-## ./Bearbeidet resultater/`
+## [./Bearbeidet resultater/](https://github.com/CISK-2022-bachelorgruppe/vedlegg/tree/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater)`
 Denne mappen inneholder resultater som er bearbeidet, analysert og oppsummert.
 
 <br>
