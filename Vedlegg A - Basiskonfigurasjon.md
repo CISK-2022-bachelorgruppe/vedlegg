@@ -1,6 +1,10 @@
 # 1. Introduksjon
 I dette vedlegget vil grunnkonfigurasjonen som er utført på lab-pcene gjennomgås. Dette er for
 å kunne få et likt oppsett ved en senere anledning, og for å kunne ha likt utgangspunkt for testing.
+> **MERK:** _Denne installasjonen av programvarene vil installere de nysete versjonene som eksisterer. For å etterprøve testene i rapporten er det hensiktsmessig og spesifisere de versjonene som ble benyttet i testene! ved installasjon av programvarene!_
+
+<br>
+<br>
 
 # 2. Installasjon av programvare
 I basiskonfigurasjonen ligger det hovedsakelig to programmer. Dette er Docker og Minikube.
@@ -13,7 +17,7 @@ som ble benyttet i prosjektet.
 <br>
 
 ## 2.1 Docker
-For installasjon av Docker, ble [installasjonsguiden](https://docs.docker.com/engine/install/ubuntu/) til Docker Inc fulgt.  
+For installasjon av Docker, ble [installasjonsguiden](https://docs.docker.com/engine/install/ubuntu/) til "Docker Inc" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
 Først ble all gammel konfigurasjon av Docker fjernet med følgende kommando:
@@ -85,6 +89,7 @@ For å starte minikube og gjøre installasjonen ferdig ved førstegangsinstallas
 ```shell
 minikube start --driver=docker
 ```
+<br>
 
 For å installere kubectl må denne kommandoen skrives:
 ```shell
