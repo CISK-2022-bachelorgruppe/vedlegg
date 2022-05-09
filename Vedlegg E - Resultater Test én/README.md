@@ -11,5 +11,5 @@ Denne mappen inneholder resultater som er bearbeidet, analysert og oppsummert.
 <br>
 <br>
 
-## ./Opprinnelige resultater/
+## [./Opprinnelige resultater/](https://github.com/CISK-2022-bachelorgruppe/vedlegg/tree/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Opprinnelige%20resultater)
 Denne mappen inneholder resultater som kommer rett fra testen og som ikke er blitt endret på. Dette inkluderer mysql-databasen og skjermbilder tatt ifb. med testing.
