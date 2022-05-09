@@ -75,11 +75,18 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 <br>
 
+Etter dette legges brukeren til gruppen docker, så docker kan kjøres uten å benytte sudo foran hver kommando.
+```shell
+sudo usermod -aG docker $USER && newgrp docker
+```
+<br>
+
 For å starte minikube og gjøre installasjonen ferdig ved førstegangsinstallasjon:
 ```shell
 minikube start --driver=docker
 ```
 
+For å installere kubectl må denne kommandoen skrives:
 ```shell
-
+minikube kubectl -- get pods -A
 ```
