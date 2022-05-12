@@ -1,3 +1,17 @@
+<style>
+  .bilde {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+}
+</style>
+
+
+
+
+
+
 # Systemkonfigurasjon
 
 **Innhold:**
@@ -295,8 +309,8 @@ Denne testen vil ta omtrentlig 17 minutter og 15 sekunder.
 
 <br>
 
+
 ## 6 Test to - Skalering
----
 Test to ble gjennomført 30. april 2022 på lab-PC B og benytter tre egenlagde mikrotjenester i denne testen. Dette er django-applikasjon, mysql og python-script-get. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test to, se [tabell 6](#tabell-6-gitrepo-versjoner-test-to).
 
 #### Tabell 6: GitRepo versjoner test to
@@ -307,12 +321,13 @@ Test to ble gjennomført 30. april 2022 på lab-PC B og benytter tre egenlagde m
 | applikasjon           | [76d350309044b92898ae797c95100c09ffa1c232](https://github.com/CISK-2022-bachelorgruppe/applikasjoner/tree/76d350309044b92898ae797c95100c09ffa1c232)  |
 | kubernetes-config     | [b895df683cd9758f0dd3b6cd559106a5cae26b61](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config/tree/b895df683cd9758f0dd3b6cd559106a5cae26b61)  |
 
+<figure id="Figur 4">
+<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" class="bilde" style="width:500px">
+<figcaption align = "center"><b>Figur 4: Oppsett i Test to</b></figcaption>
+</figure>
 
 
 
-<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" width="500px"/>
-
-#### Figur 4: Oppsett i Test to
 <br>
 
 Denne testen benytter django-applikasjon og mysql-databasen til å danne grunnmuren i applikasjonen på samme måte som skjer i test 1. Til selve testen ble python-script-get tjenesten benyttet. Siden denne testen gikk ut på å teste ytelsen til en applikasjon opp mot antall django-applikasjons podder som kjører, er python-script-get konfigurert til å sende et valgfritt antall GET-forespørsel til django-applikasjon så fort som mulig. Da kan tiden det tar å utføre alle GET-forespørslene måles, og resultatet bidrar til å måle applikasjonens ytelse.
