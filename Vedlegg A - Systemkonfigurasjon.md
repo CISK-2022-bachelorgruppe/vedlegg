@@ -1,4 +1,19 @@
 # Systemkonfigurasjon
+
+**Innhold:**
+* [Generelt](#generelt)
+1. [GitHub](#1-github)
+2. [Basiskonfigurasjon](#2-basiskonfigurasjon)
+3. [Egenutviklet applikasjon](#3-egenutviklet-applikasjon)
+4. [Kubernetes konfigurasjon](#4-kubernetes-konfigurasjon)
+5. [Test én - Pod-terminering](#5-test-én---pod-terminering)
+6. [Test to - Skalering](#6-test-to---skalering)
+7. [Test tre - HorisontalPodAutoskalering (HPA)](#7-test-tre---horisontalpodautoskalering-hpa)
+
+## Generelt
+
+Dette vedlegget tar for seg hvordan lab-PCene ble konfigurert til å gjennomføre testene.  
+
 I prosjektet ble tre like lab-PCer benyttet. Disse ble utdelt av CISK og modellen er en ThinkBook
 14 G2 ITL. Alle PCene har samme maskinvare, men det er forekomster av ulike versjoner med
 tanke på OS og programmer. Maskinvaren til PCene er:
@@ -8,7 +23,7 @@ tanke på OS og programmer. Maskinvaren til PCene er:
 
 For enkelthetsskyld blir PCene navngitt hhv. A, B og C, hvor PC A ble benyttet til test 1, PC B ble benyttet til test 2 og PC C ble benyttet til test 3.
 Lab-PCene ble tanket med unix-basert operativsystem. Operativsystemet på PC A og C er Ubuntu og PC B er Pop!
-OS.
+OS. [Tabell 1](#tabell-1-oversikt-lab-pcer) viser hvilke versjoner av operativsystemer og programvarer som er installert på lab-PCene.
 
 <br>
 
@@ -139,13 +154,13 @@ minikube kubectl -- get pods -A
 
 ## 3 Egenutviklet applikasjon
 Til testene ble det utviklet en applikasjon som består av noen mikrotjenester. Ikke alle tjenestene benyttes i hver test, men den tjenesten som er nødvendig i det testen gjøres blir aktivert.
-Tabell 3 viser oppsummert de mikrotjenestene som ble benyttet i prosjektet, hva de gjør og
+[Tabell 3](#tabell-3-mikrotjenester) viser oppsummert de mikrotjenestene som ble benyttet i prosjektet, hva de gjør og
 hvilken test de ble benyttet i.
 Disse tjenestene, utenom mysql-set, kan finnes i repoet applikasjoner.
 
 <br>
 
-Tabell 3: Mikrotjenester
+#### Tabell 3: Mikrotjenester
 | Navn på tjeneste | Hva gjør tjenesten | Benyttes i test: |
 | - | - | - |
 | djangoapplikasjon | API endepunkt og visualisering av database  | 1 og 2 |
@@ -163,7 +178,8 @@ Tabell 3: Mikrotjenester
 Åpnes nettsiden til django vil dette gjøre et databasesøk og alle treff fra databasen dyttes inn i nettsiden før det vises for brukeren. Dette gjør funksjonen mer krevende å kjøre, men det gjør også at funksjonen er avhengig av at databasen kjører og har nok kapasitet. Se figur 2 for bilde av brukergrensesnittet.
 
 ![Django brukergrensesnitt](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/Django-brukergrensesnitt.png)
-Figur 2: Django brukergrensesnitt
+#### Figur 2: Django brukergrensesnitt
+<br>
 
 I tillegg er django-applikasjonen utstyrt med et API hvor databaseforespørsler til mysql-databasen kan utføres. Dette APIet kan nås ved å gå inn på samme nettsted som over, men legge til /api. Åpnes denne nettsiden vil ordet _Suksess_ dukke opp og en ny rad er blitt lagt til i databasen som befinner seg i mysql-set.
 <span style="color:red">Bør yaml-filen nevnes her?</span>
@@ -173,11 +189,11 @@ I tillegg er django-applikasjonen utstyrt med et API hvor databaseforespørsler 
 ### 3.2 mysql
 Mysql-databasen står for persistent lagring av all data lagt inn i databasen. Mysql-set-tjenesten ligger til venstre i figur 5.1. Til å lage mysql-tjenesten ble Oracles offesielle mysql Dockerimage benyttet. I repoet _kubernetes-konfig_ er det definert i mysql-statefulset.yaml-filen at image mysql:5.7 skal benyttes. Dette gjør at nyere versjoner av mysql ikke vil bli benyttet, men sikrer etterprøving av resultater. Det eneste som er endret på er at mysql skal opprette en database med navn _bachelor\_db_ og et passord til databasebrukeren når mysql starter opp. 
 
-I tabell 4 vises alle felt i databasenavnet _bachelor\_db_ og et mysql-tabell som heter _api\_appdb_, samt hva som lagres i feltene.
+I [tabell 4](#tabell-4-database-oppsett) vises alle felt i databasenavnet _bachelor\_db_ og et mysql-tabell som heter _api\_appdb_, samt hva som lagres i feltene.
 
 <br>
 
-Tabell 4: Database oppsett
+#### Tabell 4: Database oppsett
 | Felt   | Forklaring av felt  |
 | -  | -  |
 | id  | indeksnummer på raden  |
@@ -201,7 +217,7 @@ Siden det blir lagt inn en ny rad i databasen om django-podden fungerer, vil det
 <br>
 
 ### 3.4 pod-sletting
-Pod-sletting er en tjeneste som automatiserer mye av test 1. Tjenesten startes ved å kjøre _skript.sh_ (bash-script) lokalt på lab-PCen som benyttes til testing. Overordnet vil _skript.sh_ vil først starte sched-applikasjonen, så vil den vente i to minutter før selve testen starter. Når testen starter vil denne tjenesten lagre django-poddens navn i en fil, for så å terminere denne podden. Dette skjer 30 ganger, med 30 sekunders ventetid mellom hver terminering.
+Pod-sletting er en tjeneste som automatiserer mye av test én. Tjenesten startes ved å kjøre _skript.sh_ (bash-script) lokalt på lab-PCen som benyttes til testing. Overordnet vil _skript.sh_ vil først starte sched-applikasjonen, så vil den vente i to minutter før selve testen starter. Når testen starter vil denne tjenesten lagre django-poddens navn i en fil, for så å terminere denne podden. Dette skjer 30 ganger, med 30 sekunders ventetid mellom hver terminering.
 
 Når testen er ferdig, avsluttes sched-applikasjonen og resultatet som ligger i databasen _bachelor\_db_ eksporteres til en .csv-fil på host-maskinen.
 
@@ -255,11 +271,11 @@ _Deploymenten_ henter et Docker image, kalt sched:latest, fra lokal maskin, og k
 <br>
 
 ## 5 Test én - Pod-terminering
-Test én ble gjennomført 29. april 2022 på lab-PC A og benytter fire egenlagde mikrotjenester i denne testen. Dette er django-applikasjon, mysql, sched-applikasjon og pod-sletting. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test én, se tabell 5.
+Test én ble gjennomført 29. april 2022 på lab-PC A og benytter fire egenlagde mikrotjenester i denne testen. Dette er django-applikasjon, mysql, sched-applikasjon og pod-sletting. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test én, se [tabell 5](#tabell-5-gitrepo-versjoner-test-én).
 
 <br>
 
-Tabell 5: GitRepo versjoner test én
+#### Tabell 5: GitRepo versjoner test én
 | GitRepo               | Commit-hash:                              |
 | -                     | -                                         |
 | applikasjon           | [16caeede03f35f435224556b7a7f0c5a696c78c7](https://github.com/CISK-2022-bachelorgruppe/applikasjoner/tree/16caeede03f35f435224556b7a7f0c5a696c78c7)  |
@@ -281,9 +297,9 @@ Denne testen vil ta omtrentlig 17 minutter og 15 sekunder.
 
 ## 6 Test to - Skalering
 ---
-Test to ble gjennomført 30. april 2022 på lab-PC B og benytter tre egenlagde mikrotjenester i denne testen. Dette er django-applikasjon, mysql og python-script-get. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test to, se tabell 5.6.
+Test to ble gjennomført 30. april 2022 på lab-PC B og benytter tre egenlagde mikrotjenester i denne testen. Dette er django-applikasjon, mysql og python-script-get. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test to, se [tabell 6](#tabell-6-gitrepo-versjoner-test-to).
 
-Tabell 5.6: GitRepo versjoner test to
+#### Tabell 6: GitRepo versjoner test to
 
 
 | GitRepo               | Commit-hash:                              |
@@ -293,18 +309,20 @@ Tabell 5.6: GitRepo versjoner test to
 
 
 
-<span style="color:red">Figur 4: Oppsett i Test to</span>
 
-<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" width="50%"/>
+<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" width="500px"/>
+
+#### Figur 4: Oppsett i Test to
+<br>
 
 Denne testen benytter django-applikasjon og mysql-databasen til å danne grunnmuren i applikasjonen på samme måte som skjer i test 1. Til selve testen ble python-script-get tjenesten benyttet. Siden denne testen gikk ut på å teste ytelsen til en applikasjon opp mot antall django-applikasjons podder som kjører, er python-script-get konfigurert til å sende et valgfritt antall GET-forespørsel til django-applikasjon så fort som mulig. Da kan tiden det tar å utføre alle GET-forespørslene måles, og resultatet bidrar til å måle applikasjonens ytelse.
 
 Tanken med testen er derfor å ta tiden på hvor lang tid det tar å sende alle GET-forespørslene til django-applikasjon og få igjen svaret ”200 OK”. Det som endres på underveis i testen vil være antall tråder som benyttes til å sende GET-forespørsler og antall podder som benyttes til å motta GET-forespørslene.
 
-Når python-script-get ble kjørt, ble argumentene _$(minikube ip)_, _30001_, _200_, _10_, _$HOME/git_, _sj_ og _$HOME/git_ lagt til. Dette førte til en test som kjøres mot den lokale minikubes ip-adresse på port 30001 som er django-applikasjonens _NodePort_. I tillegg ble det definert at 200 GET-forespørsler skulle sendes og at dette skal gjennomføres 10 ganger for hver tråd som legges til. python-script-get definerer at det skal testes fra en til ti tråder og en til ti podder. Tabell 7 gir en liten oversikt over et utsnitt av testene som gjøres i test to.
+Når python-script-get ble kjørt, ble argumentene _$(minikube ip)_, _30001_, _200_, _10_, _$HOME/git_, _sj_ og _$HOME/git_ lagt til. Dette førte til en test som kjøres mot den lokale minikubes ip-adresse på port 30001 som er django-applikasjonens _NodePort_. I tillegg ble det definert at 200 GET-forespørsler skulle sendes og at dette skal gjennomføres 10 ganger for hver tråd som legges til. python-script-get definerer at det skal testes fra en til ti tråder og en til ti podder. [Tabell 7](#tabell-7-tester-i-test-2) gir en liten oversikt over et utsnitt av testene som gjøres i test to.
 
 
-Tabell 7: Tester i test 2
+#### Tabell 7: Tester i test 2
 |  Testnr. |  Antall pods  | Antall tråder   | Antall GET-forespørsler  |  Antall gjennomføringer |
 | -  | -  | -  |  - |  - |
 |1     |    1    |    1    |    200    |    10|
@@ -337,12 +355,13 @@ Tabell 7: Tester i test 2
 
 
 <br>
+<br>
+
 
 ## 7 Test tre - HorisontalPodAutoskalering (HPA)
---- 
-Test 3 ble gjennomført 28. april 2022 på lab-PC C og benytter konfigurasjonsfiler fra K8s sine nettsider. Konfigurasjonsfilene ble lagt inn i GitHub. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test tre, se tabell 8.
+Test 3 ble gjennomført 28. april 2022 på lab-PC C og benytter konfigurasjonsfiler fra K8s sine nettsider. Konfigurasjonsfilene ble lagt inn i GitHub. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test tre, se [tabell 8](#tabell-8-gitrepo-versjoner-test-tre).
 
-Tabell 8: GitRepo versjoner test tre
+#### Tabell 8: GitRepo versjoner test tre
 | GitRepo               | Commit-hash:                              |
 | -                     | -                                         |
 | vedlegg/test_3_hpa           | [86f3047459bb0e858809a3049841976329110567](https://github.com/CISK-2022-bachelorgruppe/vedlegg/tree/86f3047459bb0e858809a3049841976329110567/test_3_hpa) |
