@@ -21,7 +21,12 @@ Tabell 1: Oversikt lab-PCer
 
 De systemene som er koblet opp er et kubernetescluster i minikube. <span style="color:red">I tillegg er det satt opp et kubernetescluster ved hjelp av Tanzu versjon V0.10.0.</span>. 
 
+
+<br>
+
+
 ## 1 GitHub
+---
 Git ble benyttet til versjonsontroll av applikasjonen som er laget og et fellesområde hvor filer tilknyttet dette prosjektet er blitt lagret. Alle konfigurasjonsfiler, applikasjoner og vedlegg ligger i GitHub. Alle repoene er samlet i en organisasjon som finnes på denne lenken: https://github.com/CISK-2022-bachelorgruppe
 
 Organisasjonen inneholder tre repoer. Dette er [applikasjoner](https://github.com/CISK-2022-bachelorgruppe/applikasjoner), [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config) og [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg). Se tabell 2
@@ -33,20 +38,30 @@ Tabell 2: Gitrepo oppsummering
 |    [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config)  |   Dette repoet inneholder alle kubernetes YAML-filer som benyttes ved deployering av f. eks. _Statefulset_, _Deployments_, _PersistentVolume_ osv.                                                |
 |   [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg)             |   Dette repoet har vedlegg til dette prosjektet |
 
+<br>
+
 
 ## 2 Basiskonfigurasjon
+---
 Dette kapitlet tar for seg overordnet basiskonfigurasjon på lab-PCene som ble benyttet i prosjektet. For en mer detaljert installasjonsguide for å kunne oppnå tilnærmet likt labmiljø som
 ble benyttet i dette prosjektet, se <span style="color:red">Vedlegg A - Basiskonfigurasjon</span>.
+
+<br>
 
 ### 2.1 Docker
 Docker blir i dette prosjektet benyttet som en driver for minikube og må derfor installeres før
 minikube.
 
+<br>
+
 ### 2.2 Minikube
 For å utføre konseptbevisene som er laget, trengs et kubernetescluseter. På grunn av bacheloroppgavens tidsbegrensning var det ikke tid nok til å sette opp et fullskala kubernetescluster.
 Derfor ble det installert minikube på egne lab-PCer. Minikube lager et virtuelt kubernetescluster som tillater å teste funksjoner som finnes i fullt oppsatte clustere.
 
+<br>
+
 ## 3 Egenutviklet applikasjon
+---
 Til testene ble det utviklet en applikasjon som består av noen mikrotjenester. Ikke alle tjenestene benyttes i hver test, men den tjenesten som er nødvendig i det testen gjøres blir aktivert.
 Tabell 3 viser oppsummert de mikrotjenestene som ble benyttet i prosjektet, hva de gjør og
 hvilken test de ble benyttet i.
@@ -65,6 +80,8 @@ Tabell 3: Mikrotjenester
 
 <span style="color:red">Figur 5.1: Visualisering av pods</span>
 
+<br>
+
 ### 3.1 django-applikasjon
 <span style="color:red">Denne ligger i midten i figur 5.1.</span> Django-applikasjonen står for brukergrensesnittet til selve applikasjonen. Ved å åpne en nettleser kan brukergrensesnittet til denne tjenesten nås. I dette prosjektet ble denne tjenesten kjørt i minikube med en NodePort, noe som gjør at den kan nås med minikube sin ip-adresse og en port som er forhåndsbestemt. Her var dette 192.168.49.2 med port 30001.
 Åpnes nettsiden til django vil dette gjøre et databasesøk og alle treff fra databasen dyttes inn i nettsiden før det vises for brukeren. Dette gjør funksjonen mer krevende å kjøre, men det gjør også at funksjonen er avhengig av at databasen kjører og har nok kapasitet. Se figur for bilde av brukergrensesnittet. 5.2
@@ -73,6 +90,8 @@ Figur 5.2: Django brukergrensesnitt
 
 I tillegg er django-applikasjonen utstyrt med et API hvor databaseforespørsler til mysql-databasen kan utføres. Dette APIet kan nås ved å gå inn på samme nettsted som over, men legge til /api. Åpnes denne nettsiden vil ordet Suksess dukke opp og en ny rad er blitt lagt til i databasen som befinner seg i mysql-set.
 <span style="color:red">Bør yaml-filen nevnes her?</span>
+
+<br>
 
 ### 3.2 mysql
 Mysql-databasen står for persistent lagring av all data lagt inn i databasen. Mysql-set-tjenesten ligger til venstre i figur 5.1. Til å lage mysql-tjenesten ble Oracles offesielle mysql Dockerimage benyttet. I repoet kubernetesconfig er det definert i mysql-statefulset.yaml-filen at image mysql:5.7 skal benyttes. Dette gjør at nyere versjoner av mysql ikke vil bli benyttet, men sikrer etterprøving av resultater. Det eneste som er endret på er at mysql skal opprette en database med navn bachelor_db og et passord til databasebrukeren når mysql starter opp. Det er ikke gjort noen andre endringer på dette image annet en miljøvariablene som er definert i yaml-filen. Image ble hentet 22.04.2022. I tabell 5.4 vises alle felt i databasenavnet bachelor_db og et mysql-tabell som heter api_appdb, samt hva som lagres i feltene.
@@ -87,6 +106,9 @@ tid_siden_siste tid siden forrige forespørsel i databasen
 pod_navn hvilket navn podden som gjør GET forespørselen har
 
 
+<br>
+
+
 ### 3.3 sched-applikasjon
 Sched-applikasjonen kjører et pythonscript som sender HTTP GET-forespørseler til APIet i
 django-applikasjonen med jevne mellomrom. Siden GET-forespørslene er rettet mot APIet vil
@@ -96,6 +118,9 @@ hvis den ble terminert, noe som skal simulere en error i podden.
 Siden det blir lagt inn en ny rad i databasen om django-podden fungerer, vil det derfor være
 mulig å se hvor lang tid det tar fra django-applikasjons-podden blir terminert til den er oppe
 igjen. Dette er fordi raden inneholder klokkeslettet den ble lagt inn.
+
+<br>
+
 ### 3.4 pod-sletting
 Pod-sletting er en tjeneste som automatiserer mye av test 1. Tjenesten startes ved å kjøre skript.sh
 (bash-script) lokalt på lab-PCen som benyttes til testing. Overordnet vil skript.sh vil først starte
@@ -104,6 +129,9 @@ denne tjenesten lagre django-poddens navn i en fil, for så å terminere denne p
 30 ganger, med 30 sekunders ventetid mellom hver terminering.
 Når testen er ferdig, avsluttes sched-applikasjonen og resultatet som ligger i databasen bachelor_db
 eksporteres til en .csv-fil på host-maskinen
+
+<br>
+
 ### 3.5 python-script-get
 Python-script-get er en tjeneste som automatiserer mye av test 2. Tjenesten startes ved å kjøre test-gjennomføring.sh (bash-script) lokalt på lab-PCen som benyttes til testing. Overordnet
 vil test-gjennomføring.sh starte testen ved hjelp av 7 argumenter som må legges til. Dette er
@@ -112,13 +140,20 @@ hvor mange forespørsler som skal sendes og hvor mange gjennomføringer som skal
 hver gjennomføring starter bash-scriptet et nytt python-script som står for GET-forespørslene
 mot django-applikasjonen. Bash-scriptet tar tiden på hvor lang tid python-scriptet bruker på å
 gjennomføre alle GET-forespørslene og gir dermed den avhengige variabelen i denne testen.
+
+<br>
+
 ## 4 Kubernetes konfigurasjon
+---
 For å kjøre opp applikasjonen beskrevet i kapittel 5.3 i K8s er det benyttet yaml-filer. Disse
 YAML-filene ligger i repoet kubernetes-konfig. Når YAML-filene skal legges inn i K8s blir
 kustomization.yaml benyttet. Dette bidrar til at ku én kommando må skrives for å deployere én
 mikrotjeneste. Skal mikrotjenesten django-applikasjon deployeres, vil det derfor være nok å ha
 en terminal åpen i mappen django i kubernetes-konfig-repoet og kjøre kommandoen:
 \$ mi ni k u b e k u b e c t l −− a p pl y −k .
+
+<br>
+
 ### 4.1 django-applikasjon
 Til django-applikasjonen benyttes kun objektene Deployment og Service. Deploymenten henter
 et Docker image fra Docker Hub som er utviklet ifb. med dette prosjektet. Docker imaget og
@@ -130,6 +165,9 @@ Servicen er satt opp som en NodePort og gir derfor tilgang til django-applikasjo
 av en port. Denne gjør slik at django-entrypoint, som er navnet på Servicen, blir eksponert som
 på porten 30001. Dette vil si at det går an å nå tjenesten fra utsiden av K8s-clusteret ved hjelp
 av ip-adressen til minikube og porten 30001.
+
+<br>
+
 ### 4.2 mysql
 Til mysql-databasen benyttes objektene PersistenVolume, Secret, ConfigMap StatefulSet og Service.
 I PersistentVolume defineres hvor i minikube dataen, som linkes mot dette volumet, skal lagres.
@@ -144,7 +182,10 @@ I tillegg er det definert to miljøvariabler. Disse variablene ligger ikke i sel
 de ligger i objektene Secret og ConfigMap. Variablene bestemmer databasepassordet til databasen og databasenavnet til databasen som skal opprettes ved deployering av dette StatefulSettet.
 Service er en vanlig ClusterIP K8s-service, noe som gjør at databasen kun kan aksesseres fra
 innsiden av K8s-clusteret.
-## 4.3 sched-applikasjon
+
+<br>
+
+### 4.3 sched-applikasjon
 Sched-applikasjonen er Som nevnt i kap 5.4 kan YAML-filene deployeres med en kommando.
 Ved test 1 skal sched-applikasjonen benyttes, men deployeres via scriptet pod-sletting. Kommandoen nevnt i kap 5.4 trenger derfor ikke å benyttes for sched-applikasjonen.
 Til sched-applikasjonen benyttes objektet Deployment.
@@ -152,7 +193,11 @@ Deploymenten henter et Docker image, kalt sched:latest, fra lokal maskin, og kj�
 med to miljøvariabler. Den ene variabelen bestemmer intervallet til GET-forespørseler, altså
 tiden det skal ta mellom hver GET-forespørsel, mens den andre variabelen bestemmer hvilken IP/DNS API-et befinner seg på. Her er django-entrypoint:8000 benyttet, ettersom djangoentrypoint er Servicen til django-applikasjonen.
 39
-# 5 Test én - Pod-terminering
+
+<br>
+
+## 5 Test én - Pod-terminering
+---
 Test én ble gjennomført 29. april 2022 på lab-PC A og benytter fire egenlagde mikrotjenester i
 denne testen. Dette er django-applikasjon, mysql, sched-applikasjon og pod-sletting.
 Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av
@@ -172,7 +217,12 @@ Som nevnt i kapittel 5.3.4 vil testen gjennomføre terminering av 30 django-appl
 og totalt vil testen ta 17 minutter og 15 sekunder.
 MERK: Detaljerte instruksjoner på gjennomføring av Test én kan finnes i Vedlegg B - Fremgangsmåte Test 1 og for informasjon om kildekoden, kan kommentarene i kildekoden leses.
 40
-# 6 Test to - Skalering
+
+
+<br>
+
+## 6 Test to - Skalering
+---
 Test to ble gjennomført 30. april 2022 på lab-PC B og benytter tre egenlagde mikrotjenester
 i denne testen. Dette er django-applikasjon, mysql og python-script-get. Før denne testen kan
 kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet
@@ -232,7 +282,12 @@ Antall gjennomføringer
 osv ......
 MERK: Detaljerte instruksjoner på gjennomføring av Test to kan finnes i Vedlegg C - Fremgangsmåte Test 2 og for informasjon om kildekoden, kan kommentarene i kildekoden leses.
 42
-# 7 Test tre - HorisontalPodAutoskalering (HPA)
+
+
+<br>
+
+## 7 Test tre - HorisontalPodAutoskalering (HPA)
+---
 Test 3 ble gjennomført 28. april 2022 på lab-PC C og benytter konfigurasjonsfiler fra K8s sine
 nettsider. Konfigurasjonsfilene ble lagt inn i GitHub.
 Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av
