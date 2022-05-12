@@ -1,17 +1,3 @@
-<style>
-  .bilde {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 500px;
-}
-</style>
-
-
-
-
-
-
 # Systemkonfigurasjon
 
 **Innhold:**
@@ -297,8 +283,11 @@ Test én ble gjennomført 29. april 2022 på lab-PC A og benytter fire egenlagde
 
 
 
-<span style="color:red">Figur 3: Logisk oversikt over test én </span>
-
+<p align="center" id="Figur 3">
+<img src="https://media.istockphoto.com/vectors/missing-rubber-stamp-vector-vector-id1213374148?k=20&m=1213374148&s=612x612&w=0&h=A3_Ku27Jf_XRfsWCZYvwJWQGNR2hbHDh9ViLLaAdJ5w=" style="width:500px">
+<br>
+<b>Figur 3: Logisk oversikt over test én</b>
+</p>
 
 Test én benytter django-applikasjon og mysql-databasen til å danne grunnmuren i applikasjonen. Her dannes grensesnittet til mysql-databasen og muligheten til å lagre persistent data. Til selve testen ble sched-applikasjon og pod-sletting benyttet. Siden denne testen gikk ut på å vise hvor lang tid det tar fra en pod termineres til den fungerer igjen, er sched-applikasjonen konfigurert til å sende en GET-forespørsel til django-applikasjon sitt API hvert millisekund, noe som gjør at det opprettes en ny rad i databasen hvert millisekund. Ved å gjøre dette er det mulig å se tiden hver databaserad er lagt inn og med det finne tiden siden forrige databaserad. Dette gir en indikasjon på hvor lenge APIet til django-applikasjonen har vært nede. 
 
@@ -321,10 +310,12 @@ Test to ble gjennomført 30. april 2022 på lab-PC B og benytter tre egenlagde m
 | applikasjon           | [76d350309044b92898ae797c95100c09ffa1c232](https://github.com/CISK-2022-bachelorgruppe/applikasjoner/tree/76d350309044b92898ae797c95100c09ffa1c232)  |
 | kubernetes-config     | [b895df683cd9758f0dd3b6cd559106a5cae26b61](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config/tree/b895df683cd9758f0dd3b6cd559106a5cae26b61)  |
 
-<figure id="Figur 4">
-<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" class="bilde" style="width:500px">
-<figcaption align = "center"><b>Figur 4: Oppsett i Test to</b></figcaption>
-</figure>
+<p align="center" id="Figur 4">
+<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" style="width:500px">
+<br>
+<b>Figur 4: Oppsett i Test to</b>
+</p>
+
 
 
 
@@ -381,7 +372,12 @@ Test 3 ble gjennomført 28. april 2022 på lab-PC C og benytter konfigurasjonsfi
 | -                     | -                                         |
 | vedlegg/test_3_hpa           | [86f3047459bb0e858809a3049841976329110567](https://github.com/CISK-2022-bachelorgruppe/vedlegg/tree/86f3047459bb0e858809a3049841976329110567/test_3_hpa) |
 
-<span style="color:red">Figur 5.5: Logisk oversikt over test tre</span>
+
+<p align="center" id="Figur 5">
+<img src="https://media.istockphoto.com/vectors/missing-rubber-stamp-vector-vector-id1213374148?k=20&m=1213374148&s=612x612&w=0&h=A3_Ku27Jf_XRfsWCZYvwJWQGNR2hbHDh9ViLLaAdJ5w=" style="width:500px">
+<br>
+<b>Figur 5: Logisk oversikt over test tre</b>
+</p>
 
 
 Denne testen benytter seg av K8s konfigurasjonsfiler fra K8s sine nettsider som kan finnes her: HorizontalPodAutoscaler Walkthrough.
