@@ -12,7 +12,8 @@ OS.
 
 <br>
 
-Tabell 1: Oversikt lab-PCer
+
+#### Tabell 1: Oversikt lab-PCer
 |   PC  |   OS-versjon          |   docker-versjon  |   minikube-versjon    |   kubectl-versjon |
 |   -   |   -                   |   -               |       -               |   -               |
 |   A   |   Ubuntu 20.04.4 LTS  | 20.10.14          |   v1.25.2             |   v1.23.3         |
@@ -26,12 +27,11 @@ De systemene som er koblet opp er et kubernetescluster i minikube. <span style="
 
 
 ## 1 GitHub
----
 Git ble benyttet til versjonsontroll av applikasjonen som er laget og et fellesområde hvor filer tilknyttet dette prosjektet er blitt lagret. Alle konfigurasjonsfiler, applikasjoner og vedlegg ligger i GitHub. Alle repoene er samlet i en organisasjon som finnes på denne lenken: https://github.com/CISK-2022-bachelorgruppe
 
-Organisasjonen inneholder tre repoer. Dette er [applikasjoner](https://github.com/CISK-2022-bachelorgruppe/applikasjoner), [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config) og [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg). Se tabell 2
+Organisasjonen inneholder tre repoer. Dette er [applikasjoner](https://github.com/CISK-2022-bachelorgruppe/applikasjoner), [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config) og [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg). Se [tabell 2](#tabell-2-gitrepo-oppsummering)
 
-Tabell 2: Gitrepo oppsummering
+#### Tabell 2: Gitrepo oppsummering
 |        Gitrepo        |        Hva finnes i repoet?                       |
 |            --         |             --                                    |
 | [applikasjoner](https://github.com/CISK-2022-bachelorgruppe/applikasjoner)         |   I dette repoet finnes egenutviklede mikrotjenester som danner én applikasjon. Mikrotjenestene er django-applikasjon, http-server, pythonscript-get, pod-sletting og sched.  |
@@ -39,18 +39,64 @@ Tabell 2: Gitrepo oppsummering
 |   [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg)             |   Dette repoet har vedlegg til dette prosjektet |
 
 <br>
-
+<br>
 
 ## 2 Basiskonfigurasjon
----
-Dette kapitlet tar for seg overordnet basiskonfigurasjon på lab-PCene som ble benyttet i prosjektet. For en mer detaljert installasjonsguide for å kunne oppnå tilnærmet likt labmiljø som
-ble benyttet i dette prosjektet, se <span style="color:red">Vedlegg A - Basiskonfigurasjon</span>.
+Dette kapitlet tar for seg basiskonfigurasjon på lab-PCene som ble benyttet i prosjektet. Dette er for å kunne få et likt oppsett ved en senere anledning, og for å kunne ha likt utgangspunkt for testing. I basiskonfigurasjonen ligger det hovedsakelig to programmer. Dette er Docker og Minikube.
+De neste kapitlene vil gjennomgå de prosedyrene som ble utført ved installasjon på lab-pcene som ble benyttet i prosjektet.
+
+> **MERK:** _Denne installasjonen av programvarene vil installere de nysete versjonene som eksisterer. For å etterprøve testene i rapporten er det hensiktsmessig og spesifisere de versjonene som ble benyttet i testene! ved installasjon av programvarene!_  
+_For å se hvilke versjoner av de ulike programvarene som ble installert, se [Tabell 1](#tabell-1-oversikt-lab-pcer)_
 
 <br>
 
 ### 2.1 Docker
 Docker blir i dette prosjektet benyttet som en driver for minikube og må derfor installeres før
-minikube.
+minikube. For installasjon av Docker, ble [installasjonsguiden](https://docs.docker.com/engine/install/ubuntu/) til "Docker Inc" fulgt.  
+Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
+
+Først ble all gammel konfigurasjon av Docker fjernet med følgende kommando:
+```shell
+sudo apt-get remove docker docker-engine docker.io containerd runc
+```
+<br>
+
+Så ble Docker installert med et _repository_. Med de neste kommandoene oppdateres og installeres det pakker som gjør det mulig å tillate _repositories_ over HTTPS.
+```shell
+$ sudo apt-get update
+
+$ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+```
+<br>
+
+Her legges Docker Inc sin offisielle GPG-nøkkel til PC-en:
+```shell
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
+<br>
+
+Så kjøres en kommando for å sette opp et stabilt _repository_ og gjør det klart til innstallering:
+```shell
+$ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+<br>
+
+Deretter installeres siste versjon av Docker Engine med følgende kommandoer:  
+> **MERK:** _Skal testen etterprøves, bør det spesifiseres hvilken versjon som skal lastes ned her, for å få samme versjon som ble benyttet under forsøket i dette prosjektet. Dette er for å skape et likt testmiljø_
+```shell
+$ sudo apt-get update
+
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+<br>
+Dette er det som må til for å installere Docker på PC-en. 
+
 
 <br>
 
@@ -58,10 +104,40 @@ minikube.
 For å utføre konseptbevisene som er laget, trengs et kubernetescluseter. På grunn av bacheloroppgavens tidsbegrensning var det ikke tid nok til å sette opp et fullskala kubernetescluster.
 Derfor ble det installert minikube på egne lab-PCer. Minikube lager et virtuelt kubernetescluster som tillater å teste funksjoner som finnes i fullt oppsatte clustere.
 
+For installasjon av minikube, ble [installasjonsguiden](https://minikube.sigs.k8s.io/docs/start/) til "The Kubernetes Authors" fulgt.  
+Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
+
+For å installere siste versjon av minikube på x86-64 Linux med binær nedlastning:
+```shell
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+<br>
+
+Etter dette legges brukeren til gruppen docker, så docker kan kjøres uten å benytte sudo foran hver kommando.
+```shell
+sudo usermod -aG docker $USER && newgrp docker
+```
+<br>
+
+For å starte minikube og gjøre installasjonen ferdig ved førstegangsinstallasjon:
+```shell
+minikube start --driver=docker
+```
+<br>
+
+For å installere kubectl må denne kommandoen skrives:
+```shell
+minikube kubectl -- get pods -A
+```
+
+
+
+
+<br>
 <br>
 
 ## 3 Egenutviklet applikasjon
----
 Til testene ble det utviklet en applikasjon som består av noen mikrotjenester. Ikke alle tjenestene benyttes i hver test, men den tjenesten som er nødvendig i det testen gjøres blir aktivert.
 Tabell 3 viser oppsummert de mikrotjenestene som ble benyttet i prosjektet, hva de gjør og
 hvilken test de ble benyttet i.
@@ -135,9 +211,9 @@ Når testen er ferdig, avsluttes sched-applikasjonen og resultatet som ligger i 
 Python-script-get er en tjeneste som automatiserer mye av test 2. Tjenesten startes ved å kjøre _test-gjennomføring.sh_ (bash-script) lokalt på lab-PCen som benyttes til testing. Overordnet vil _test-gjennomføring.sh_ starte testen ved hjelp av 7 argumenter som må legges til. Dette er argumenter som styrer testen, i form av hva ip-adressen og porten til django-applikasjonen er, hvor mange forespørsler som skal sendes og hvor mange gjennomføringer som skal gjøres. For hver gjennomføring starter bash-scriptet et nytt python-script som står for GET-forespørslene mot django-applikasjonen. Bash-scriptet tar tiden på hvor lang tid python-scriptet bruker på å gjennomføre alle GET-forespørslene og gir dermed den avhengige variabelen som skal testes i denne testen.
 
 <br>
+<br>
 
 ## 4 Kubernetes konfigurasjon
----
 For å kjøre opp applikasjonen beskrevet i kapittel 5.3 i K8s er det benyttet yaml-filer. Disse
 YAML-filene ligger i repoet _kubernetes-konfig_. Når YAML-filene skal legges inn i K8s blir
 _kustomization.yaml_ benyttet. Dette bidrar til at ku én kommando må skrives for å deployere én
@@ -176,9 +252,9 @@ Til sched-applikasjonen benyttes objektet _Deployment_.
 _Deploymenten_ henter et Docker image, kalt sched:latest, fra lokal maskin, og kjører dette opp med to miljøvariabler. Den ene variabelen bestemmer intervallet til GET-forespørseler, altså tiden det skal ta mellom hver GET-forespørsel, mens den andre variabelen bestemmer hvilken IP/DNS API-et befinner seg på. Her er django-entrypoint:8000 benyttet, ettersom djangoentrypoint er Servicen til django-applikasjonen.
 
 <br>
+<br>
 
 ## 5 Test én - Pod-terminering
----
 Test én ble gjennomført 29. april 2022 på lab-PC A og benytter fire egenlagde mikrotjenester i denne testen. Dette er django-applikasjon, mysql, sched-applikasjon og pod-sletting. Før denne testen kan kjøres må alle filer tilknyttet testen bli lastet ned. For eksakt versjon av repoet som ble benyttet til test én, se tabell 5.
 
 <br>
@@ -218,8 +294,8 @@ Tabell 5.6: GitRepo versjoner test to
 
 
 <span style="color:red">Figur 4: Oppsett i Test to</span>
-![Figur 4: Oppsett i Test to](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png)
 
+<img src="https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Bilder%20til%20vedlegg/test2-oppsett.png" width="50%"/>
 
 Denne testen benytter django-applikasjon og mysql-databasen til å danne grunnmuren i applikasjonen på samme måte som skjer i test 1. Til selve testen ble python-script-get tjenesten benyttet. Siden denne testen gikk ut på å teste ytelsen til en applikasjon opp mot antall django-applikasjons podder som kjører, er python-script-get konfigurert til å sende et valgfritt antall GET-forespørsel til django-applikasjon så fort som mulig. Da kan tiden det tar å utføre alle GET-forespørslene måles, og resultatet bidrar til å måle applikasjonens ytelse.
 
@@ -254,7 +330,6 @@ Tabell 7: Tester i test 2
 |21    |    3    |    1    |    200    |    10|
 |22    |    3    |    2    |    200    |    10|
 |...   |    ...  |    ...  |    ...    |   ...|
-|osv ......|
 
 
 
