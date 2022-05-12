@@ -72,7 +72,7 @@ Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
 Først ble all gammel konfigurasjon av Docker fjernet med følgende kommando:
 ```shell
-sudo apt-get remove docker docker-engine docker.io containerd runc
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 <br>
 
@@ -124,26 +124,26 @@ Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
 For å installere siste versjon av minikube på x86-64 Linux med binær nedlastning:
 ```shell
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
+$ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 <br>
 
 Etter dette legges brukeren til gruppen docker, så docker kan kjøres uten å benytte sudo foran hver kommando.
 ```shell
-sudo usermod -aG docker $USER && newgrp docker
+$ sudo usermod -aG docker $USER && newgrp docker
 ```
 <br>
 
 For å starte minikube og gjøre installasjonen ferdig ved førstegangsinstallasjon:
 ```shell
-minikube start --driver=docker
+$ minikube start --driver=docker
 ```
 <br>
 
 For å installere kubectl må denne kommandoen skrives:
 ```shell
-minikube kubectl -- get pods -A
+$ minikube kubectl -- get pods -A
 ```
 
 
