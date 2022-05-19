@@ -42,37 +42,37 @@ Testen vil lagre sine resultater i mappen du kjører _skript.sh_ ifra. Siden _sk
 
 # 3. Gjennomføring
 **Ved testens start**
-![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-23-47.png)
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-23-47.png)
 <br>
 ---
 <br>
 
 **Sched er deployert**
-![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-24-15.png)
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-24-15.png)
 <br>
 ---
 <br>
 
 **Pod 5 er slettet**
-![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-28-00.png)
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-28-00.png)
 <br>
 ---
 <br>
 
 **Pod 18 lages**
-![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-34-00.png)
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-34-00.png)
 <br>
 ---
 <br>
 
 **Sched termineres**
-![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-41-03.png)
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-41-03.png)
 <br>
 ---
 <br>
 
 **Testen er ferdig**
-![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-41-38.png)
+![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-41-38.png)
 <br>
 ---
 <br>
