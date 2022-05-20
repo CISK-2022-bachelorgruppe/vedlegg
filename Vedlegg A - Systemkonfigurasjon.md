@@ -1,4 +1,4 @@
-# Systemkonfigurasjon
+# Vedlegg A - Systemkonfigurasjon
 
 **Innhold:**
 * [Generelt](#generelt)

@@ -1,15 +1,31 @@
-# 1. Innledning
-Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
 
-Innhold:
-- Innledning
-- Gjennomføring av Test 3
-- Forklaring av teknsik innhold
+# Vedlegg D - Fremgangsmåte Test tre
 
-# 2. Gjennomføring av Test 3:
+**Innhold:**
+1. [Innledning](#1-innledning)
+2. [Gjennomføring av test tre](#2-gjennomføring-av-test-3)  
+2.1 [For å få like resultater](#21-for-å-få-like-resultater)  
+2.2 [Fremgangsmåte](#22-fremgangsmåte)
+3. [Forklaring av teknisk innhold](#3-forklaring-av-teknisk-innhold)  
+3.1 [php-apache.yaml](#31-php-apacheyaml)  
+3.2 [hpa-php-apache.yaml](#32-hpa-php-apacheyaml)  
+3.3 [Lastgenerering med BusyBox](#33-lastgenerering-med-BusyBox)
+
+
+
+<br>
+<br>
+
+# 1 Innledning
+Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/), og er en detaljert veiledning i hvordan test tre ble gjennomført!
+
+<br>
+<br>
+
+# 2 Gjennomføring av test tre:
 
 ### Pre-install:
-- Kubernetes cluster --> minikube
+- Kubernetes _cluster_ → minikube
 - Kubectl
 - Docker
 
@@ -18,8 +34,10 @@ Innhold:
 1. Åpne to Terminalvinduer, heretter referert til Terminal A og Terminal B 
 2. Følg testinstruksene under frem til punkt `6. Overvåk HPA i Terminal A:`
 3. Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
-4. Deretter følges testinstruksene videre fra punkt `7. Stopp lasten busybox genererer i Terminal B:`
+4. Deretter følges testinstruksene videre fra punkt `7. Stopp lasten BusyBox genererer i Terminal B:`
 5. Overvåk autoskaleringen frem til den går ned til én replika.
+
+<br>
 
 ## 2.2 Fremgangsmåte
 ### 1. Start minikube med denne kommandoen i Terminal A:
@@ -47,6 +65,8 @@ Svar fra kommandoen:
 🌟  Enabled addons: storage-provisioner, default-storageclass, metrics-server
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 ```
+<br>
+
 
 ### 2. Start den innebygde tilleggsfunksjonen 'metrics-server' i minikube:
 ```shell
@@ -73,7 +93,9 @@ kube-scheduler-minikube            4m           16Mi
 metrics-server-6b76bd68b6-g5klg    6m           17Mi            
 storage-provisioner                2m           9Mi    
 ```
-### 3. start Deployment og eksponer Serivcen:
+<br>
+
+### 3. Start Deployment og eksponer Serivcen:
 ```shell
 $ kubectl apply -f php-apache.yaml
 ```
@@ -83,6 +105,7 @@ Svar fra kommandoen:
 deployment.apps/php-apache created
 service/php-apache created
 ```
+<br>
 
 ### 4. Lag den horisontalepodautoskalereren og sjekk current status:
 ```shell
@@ -108,8 +131,10 @@ Svar fra kommandoen etter ett minutt:
 NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 php-apache   Deployment/php-apache   0%/50%    1         10        1          70s
 ```
+<br>
 
-### 5. Generer mer last med busybox i Terminal B:
+
+### 5. Generer mer last med BusyBox i Terminal B:
 ```shell
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
@@ -118,6 +143,8 @@ Svar fra kommandoen:
 If you don't see a command prompt, try pressing enter.
 OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!
 ```
+<br>
+
 ### 6. Overvåk HPA i Terminal A:
 ```shell
 $ kubectl get hpa php-apache --watch
@@ -139,21 +166,25 @@ php-apache   Deployment/php-apache   57%/50%    1         10        7          3
 php-apache   Deployment/php-apache   43%/50%   1         10        7          3m21s
 php-apache   Deployment/php-apache   51%/50%   1         10        7          3m30s
 ```
-### 7. Stopp lasten busybox genererer i Terminal B:
+<br>
+
+### 7. Stopp lasten BusyBox genererer i Terminal B:
 ```
-$ <ctr> + c
+$ <ctrl> + c
 ```
 Svar fra kommandoen:
 ```
 OK!OK!OK!OK!OK!^Cpod "load-generator" deleted
 pod default/load-generator terminated (Error)`
 ```
-    
+<br>
+
 ### 8. Overvåk HPA i Terminal A og se den skalere ned:
 ```shell
 $ kubectl get hpa php-apache --watch  
 ```
 Når HPA detekterer at CPU=0% skalerer den automatisk ned til 1 replika. Dette kan ta noen minutter.
+
 Svar fra kommandoen:
 ```
 NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
@@ -166,18 +197,21 @@ php-apache   Deployment/php-apache   0%/50%    1         10        7          9m
 php-apache   Deployment/php-apache   0%/50%    1         10        6          9m46s
 php-apache   Deployment/php-apache   0%/50%    1         10        1          10m
 ```
+<br>
+<br>
 
-# 3. Forklaring av teknisk innhold:
-Her blir det  en mer detaljert beskrivelse av de forskjellige tekniskekomponentene i testen. Det vil ikke bli gjort en detaljert linje-for-linje beskrivelse av .yaml-filene.
+# 3 Forklaring av teknisk innhold:
+Her blir det  en mer detaljert beskrivelse av de forskjellige tekniske komponentene i testen. Det vil ikke bli gjort en detaljert linje-for-linje beskrivelse av .yaml-filene.
+<br>
 
 ## 3.1 php-apache.yaml
-Denne filen lager en Deployment og eksponerer den som en Serive. Deplymentet henter et ferdiglaget php-apache-image fra Docker Hub. Image er `k8s.gcr.io/hpa-example` og har php-image-versjon `php:5-apache` og er bygget opp slikt:
+Denne filen lager en Deployment og eksponerer den som en _Service_. _Deploymenten_ henter et ferdiglaget php-apache-image fra Docker Hub. Image er `k8s.gcr.io/hpa-example` og har php-image-versjon `php:5-apache` og er bygget opp slikt:
 ```
 FROM php:5-apache
 COPY index.php /var/www/html/index.php
 RUN chmod a+rx index.php
 ```
-Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye CPU. Dette er for å simulere lasten i clusteret vårt og er som følger:
+Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye CPU. Dette er for å simulere lasten i _clusteret_ vårt og er som følger:
 ```
 <?php
   $x ) 0.0001;
@@ -187,12 +221,15 @@ Koden over refererer til en `index.php`-side som utfører komplekse regnestykker
   echo "OK!";
 ?>
 ```
+<br>
 
 ## 3.2 hpa-php-apache.yaml
-Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom 1 og 10 replikas av poder som blir kontrollert av Deploymenten php-apache. Denne HPA-en vil da enten øke eller minke antall replikas for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle poder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikas baserer seg på forholdet mellom ønsket metriksverdi og gjeldende metriksverdi hentet fra `metrics-server`. Den forenklete algoritmen er som følger:
+Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom én og ti replikeringer av podder som blir kontrollert av _Deploymenten_ php-apache. Denne HPA-en vil da enten øke eller minke antall replikeringer for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle poder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikeringer baserer seg på forholdet mellom ønsket metricsverdi og gjeldende metricsverdi hentet fra `metrics-server`. Den forenklede algoritmen er som følger:
 ```
-ønsketReplikas = ceil[GjeldendeReolikas * ( GjeldendeMetriskVerdi / ØnsketMetriskVerdi )]
+ønsketreplikeringer = ceil[GjeldendeReolikas * ( GjeldendeMetriskVerdi / ØnsketMetriskVerdi )]
 ```
-Hvis skaleringsforholdet befinner seg nært 1.0 så vil control plane hoppe over skaleringen.
-## 3.3 Lastgenerering med Busybox
-For å generere en økt last mot php-apache servicen, så blir dette utført via `kubectl run`-kommandoen. Denne lar oss eksekvere en lastgenerator som heter BusyBox. Her henter den image busybox:1.28. Videre utfører kommanoen en uendelig løkke som sender forespørsler til `http://php-apache`. 
+Hvis skaleringsforholdet befinner seg nært 1.0 så vil _control plane_ hoppe over skaleringen.
+<br>
+
+## 3.3 Lastgenerering med BusyBox
+For å generere en økt last mot php-apache servicen, så blir dette utført via `kubectl run`-kommandoen. Denne lar oss eksekvere en lastgenerator som heter BusyBox. Her henter den image busybox:1.28. Videre utfører kommandoen en uendelig løkke som sender forespørsler til `http://php-apache`. 

@@ -1,5 +1,15 @@
+# Vedlegg B - Fremgangsmåte Test én
+
+**Innhold:**
+1. [Introduksjon](#1-introduksjon)
+2. [Fremgangsmåte](#2-fremgangsmåte)
+3. [Gjennomføring](#3-gjennomføring)
+
+<br>
+<br>
+
 # 1. Introduksjon
-Dette er en detaljert veiledning i hvordan test 1 ble gjennomført! Denne fremgangsmåten går ut ifra at repoene tilknyttet testen er lastet ned til hjem-mappen på lab-PCen. "`~/`"
+Dette er en detaljert veiledning i hvordan test én ble gjennomført! Denne fremgangsmåten går ut ifra at alle filer som er nødvendige for å eksekvere test én, er lastet ned til hjem-mappen på lab-PCen. "`~/`"
 <br>
 <br>
 
@@ -29,19 +39,24 @@ $ docker build -t sched .
 ```
 <br>
 
-For å starte selve testen med å tvangsstoppe podder og ta tiden på dette ble følgende kommandoer benyttet: 
+For å starte selve testen med å tvangstoppe podder og ta tiden på dette ble følgende kommandoer benyttet: 
 ```shell
 $ cd $HOME/applikasjon/pod-sletting/
 $ ./skript.sh
 ```
 <br>
 
-Testen vil lagre sine resultater i mappen du kjører _skript.sh_ ifra. Siden _skript.sh_ eksekveres fra mappen _$HOME/applikasjon/pod-sletting/_ så vil resultatene legge seg i en mappe _$HOME/applikasjon/pod-sletting/resultater/_
+Testen vil lagre sine resultater i mappen hvor kjører _skript.sh_ ifra. Siden _skript.sh_ eksekveres fra mappen _$HOME/applikasjon/pod-sletting/_, vil resultatene legge seg i en mappe _$HOME/applikasjon/pod-sletting/resultater/_
+
 <br>
 <br>
 
 # 3. Gjennomføring
-**Ved testens start**
+Under vil seks figurer listes opp, hvor tittelen til hver figur er en kort beskrivelse av når figuren ble tatt, eller hva som kan sees på figuren.
+
+<br>
+
+**Ved testens start**  
 ![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-23-47.png)
 <br>
 ---
@@ -53,13 +68,13 @@ Testen vil lagre sine resultater i mappen du kjører _skript.sh_ ifra. Siden _sk
 ---
 <br>
 
-**Pod 5 er slettet**
+**Pod 5 ble akkurat slettet**
 ![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-28-00.png)
 <br>
 ---
 <br>
 
-**Pod 18 lages**
+**Figuren viser at pod 18 lages**
 ![Bilde](https://raw.githubusercontent.com/CISK-2022-bachelorgruppe/vedlegg/d58ef1a739af2d989223295ae508c693e76433c6/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n/Bearbeidet%20resultater/Redigerte%20bilder/Skjermdump%20fra%202022-04-29%2014-34-00.png)
 <br>
 ---
