@@ -384,6 +384,6 @@ Denne testen benytter seg av K8s konfigurasjonsfiler fra K8s sine nettsider som 
 
 Denne testen tar ibruk to YAML-filer, hvor den ene filen er en _Deployment_ og den andre er en _HorizontalPodAutoscaler_. _Deploymenten_ starter en php-apache server som har begrenset kapasitet for å kunne nå ytterverdiene av poddenes tilgjengelige ressurser. _HorizontalPodAutoscaler_ definerer at minimum antall replicas skal være én og maksimum ti. I tillegg defineres et ønske om gjennomsnittelig CPU-bruk på php-apache poddene til 50%.
 
-For å sjekke oppskalering må det genereres trafikk på php-apache poddene. Dette gjøres ved å kjøre opp en ny pod med et BusyBox iamge. BusyBox sender forespørseler til php-apache serveren i en uendelig løkke. Etter en stund termineres denne podden manuelt for å stoppe trafikken inn til php-apache serveren. Dette gir resultater angående K8s nedskalering.
+For å sjekke oppskalering må det genereres trafikk på php-apache poddene. Dette gjøres ved å kjøre opp en ny pod med et BusyBox image. BusyBox sender forespørseler til php-apache serveren i en uendelig løkke. Etter en stund termineres denne podden manuelt for å stoppe trafikken inn til php-apache serveren. Dette gir resultater angående K8s nedskalering.
 
 > MERK: Detaljerte instruksjoner på gjennomføring av Test tre kan finnes i Vedlegg D - Fremgangsmåte Test 3 og for informasjon om kildekoden, kan kommentarene i kildekoden leses
