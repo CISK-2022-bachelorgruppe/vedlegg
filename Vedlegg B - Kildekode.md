@@ -1,4 +1,4 @@
-# Vedlegg F - Kildekode
+# Vedlegg B - Kildekode
 
 Kildekodene danner mange ulike filer og er ikke hensiktsmessig å skrive ut. Kildekodene kan derimot finnes på internett i GitHub hvor de er samlet i en organisasjon som finnes på denne lenken: https://github.com/CISK-2022-bachelorgruppe. For hver test ble det benyttet forskjellig kildekode så for å finne riktig kildekode til riktig test, se tabell [2](#tabell-2-gitrepo-versjoner-test-én), [3](#tabell-3-gitrepo-versjoner-test-to) og [4](#tabell-4-gitrepo-versjoner-test-tre).
 
