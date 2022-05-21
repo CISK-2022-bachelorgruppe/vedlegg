@@ -52,7 +52,7 @@ _For å se hvilke versjoner av de ulike programvarene som ble installert, se [Ta
 
 ### 3.1 Docker
 Docker blir i dette prosjektet benyttet som en driver for minikube og må derfor installeres før
-minikube. For installasjon av Docker, ble [installasjonsguiden<sup>[1]</sup>](https://docs.docker.com/engine/install/ubuntu/) til "Docker Inc" fulgt.  
+minikube. For installasjon av Docker, ble [installasjonsguiden _(https://docs.docker.com/engine/install/ubuntu/)_](https://docs.docker.com/engine/install/ubuntu/) til "Docker Inc" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
 Først ble all gammel konfigurasjon av Docker fjernet med følgende kommando:
@@ -104,7 +104,7 @@ Dette er det som må til for å installere Docker på PC-en.
 For å utføre konseptbevisene som er laget, trengs et kubernetescluseter. På grunn av bacheloroppgavens tidsbegrensning var det ikke tid nok til å sette opp et fullskala kubernetescluster.
 Derfor ble det installert minikube på egne lab-PCer. Minikube lager et virtuelt kubernetescluster som tillater å teste funksjoner som finnes i fullt oppsatte clustere.
 
-For installasjon av minikube, ble [installasjonsguiden](https://minikube.sigs.k8s.io/docs/start/) til "The Kubernetes Authors" fulgt.  
+For installasjon av minikube, ble [installasjonsguiden _(https://minikube.sigs.k8s.io/docs/start/)_](https://minikube.sigs.k8s.io/docs/start/) til "The Kubernetes Authors" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
 For å installere siste versjon av minikube på x86-64 Linux med binær nedlastning:
@@ -174,8 +174,3 @@ Sched-applikasjonen er Som nevnt i kap 5.4 kan YAML-filene deployeres med en kom
 
 Til sched-applikasjonen benyttes objektet _Deployment_.  
 _Deploymenten_ henter et Docker image, kalt sched:latest, fra lokal maskin, og kjører dette opp med to miljøvariabler. Den ene variabelen bestemmer intervallet til GET-forespørseler, altså tiden det skal ta mellom hver GET-forespørsel, mens den andre variabelen bestemmer hvilken IP/DNS API-et befinner seg på. Her er django-entrypoint:8000 benyttet, ettersom djangoentrypoint er Servicen til django-applikasjonen.
-
-
-
-
-[1]: https://docs.docker.com/engine/install/ubuntu/
