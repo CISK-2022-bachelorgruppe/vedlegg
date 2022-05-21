@@ -52,7 +52,7 @@ _For å se hvilke versjoner av de ulike programvarene som ble installert, se [Ta
 
 ### 3.1 Docker
 Docker blir i dette prosjektet benyttet som en driver for minikube og må derfor installeres før
-minikube. For installasjon av Docker, ble [installasjonsguiden[^1]](https://docs.docker.com/engine/install/ubuntu/) til "Docker Inc" fulgt.  
+minikube. For installasjon av Docker, ble [installasjonsguiden<sup>[1]</sup>](https://docs.docker.com/engine/install/ubuntu/) til "Docker Inc" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
 Først ble all gammel konfigurasjon av Docker fjernet med følgende kommando:
@@ -178,4 +178,4 @@ _Deploymenten_ henter et Docker image, kalt sched:latest, fra lokal maskin, og k
 
 
 
-[^1]: https://docs.docker.com/engine/install/ubuntu/
+[1]: https://docs.docker.com/engine/install/ubuntu/
