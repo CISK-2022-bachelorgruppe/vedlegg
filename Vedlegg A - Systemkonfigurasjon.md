@@ -7,24 +7,24 @@
 4. [Kubernetes konfigurasjon](#4-kubernetes-konfigurasjon)
 ## 1 Generelt
 
-Dette vedlegget tar for seg hvordan lab-PCene ble konfigurert til å gjennomføre testene.  
+Dette vedlegget tar for seg hvordan maskinene ble konfigurert til å gjennomføre testene.  
 
-I prosjektet ble tre like lab-PCer benyttet. Disse ble utdelt av CISK og modellen er en ThinkBook
-14 G2 ITL. Alle PCene har samme maskinvare, men det er forekomster av ulike versjoner med
-tanke på OS og programmer. Maskinvaren til PCene er:
+I prosjektet ble tre like maskiner benyttet. Disse ble utdelt av CISK og modellen er en ThinkBook
+14 G2 ITL. Alle maskinene har samme maskinvare, men det er forekomster av ulike versjoner med
+tanke på OS og programmer. Maskinvaren til maskinene er:
 * 16GB RAM
 * 512GB SSD
 * 11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz prosessor
 
-For enkelthetsskyld blir PCene navngitt hhv. A, B og C, hvor PC A ble benyttet til test 1, PC B ble benyttet til test 2 og PC C ble benyttet til test 3.
-Lab-PCene ble tanket med unix-basert operativsystem. Operativsystemet på PC A og C er Ubuntu og PC B er Pop!
-OS. [Tabell 1](#tabell-1-oversikt-lab-pcer) viser hvilke versjoner av operativsystemer og programvarer som er installert på lab-PCene.
+For enkelthetsskyld blir maskinene navngitt hhv. A, B og C, hvor maskin A ble benyttet til test én, maskin B ble benyttet til test to og maskin C ble benyttet til test 3.
+Maskinene ble tanket med unix-basert operativsystem. Operativsystemet på maskin A og C er Ubuntu og maskin B er Pop!
+OS. [Tabell 1](#tabell-1-oversikt-maskiner) viser hvilke versjoner av operativsystemer og programvarer som er installert på maskinene.
 
 <br>
 
 
-#### Tabell 1: Oversikt lab-PCer
-|   PC  |   OS-versjon          |   docker-versjon  |   minikube-versjon    |   kubectl-versjon |
+#### Tabell 1: Oversikt maskiner
+|   Maskin  |   OS-versjon          |   docker-versjon  |   minikube-versjon    |   kubectl-versjon |
 |   -   |   -                   |   -               |       -               |   -               |
 |   A   |   Ubuntu 20.04.4 LTS  | 20.10.14          |   v1.25.2             |   v1.23.3         |
 |   B   |   Pop!_OS 21.10       | 20.10.12          |   v1.25.2             |   v1.23.3         |
@@ -42,11 +42,11 @@ Organisasjonen inneholder tre repoer. Dette er [applikasjoner](https://github.co
 <br>
 
 ## 3 Basiskonfigurasjon
-Dette kapitlet tar for seg basiskonfigurasjon på lab-PCene som ble benyttet i prosjektet. Dette er for å kunne få et likt oppsett ved en senere anledning, og for å kunne ha likt utgangspunkt for testing. I basiskonfigurasjonen ligger det hovedsakelig to programmer. Dette er Docker og Minikube.
-De neste kapitlene vil gjennomgå de prosedyrene som ble utført ved installasjon på lab-pcene som ble benyttet i prosjektet.
+Dette kapitlet tar for seg basiskonfigurasjon på maskinene som ble benyttet i prosjektet. Dette er for å kunne få et likt oppsett ved en senere anledning, og for å kunne ha likt utgangspunkt for testing. I basiskonfigurasjonen ligger det hovedsakelig to programmer. Dette er Docker og Minikube.
+De neste kapitlene vil gjennomgå de prosedyrene som ble utført ved installasjon på maskinene som ble benyttet i prosjektet.
 
 > **MERK:** _Denne installasjonen av programvarene vil installere de nysete versjonene som eksisterer. For å etterprøve testene i rapporten er det hensiktsmessig og spesifisere de versjonene som ble benyttet i testene! ved installasjon av programvarene!_  
-_For å se hvilke versjoner av de ulike programvarene som ble installert, se [Tabell 1](#tabell-1-oversikt-lab-pcer)_
+_For å se hvilke versjoner av de ulike programvarene som ble installert, se [Tabell 1](#tabell-1-oversikt-maskiner)_
 
 <br>
 
@@ -73,7 +73,7 @@ $ sudo apt-get install \
 ```
 <br>
 
-Her legges Docker Inc sin offisielle GPG-nøkkel til PC-en:
+Her legges Docker Inc sin offisielle GPG-nøkkel til maskinen:
 ```shell
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
@@ -95,14 +95,14 @@ $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 <br>
-Dette er det som må til for å installere Docker på PC-en. 
+Dette er det som må til for å installere Docker på maskinen. 
 
 
 <br>
 
 ### 3.2 Minikube
 For å utføre konseptbevisene som er laget, trengs et kubernetescluseter. På grunn av bacheloroppgavens tidsbegrensning var det ikke tid nok til å sette opp et fullskala kubernetescluster.
-Derfor ble det installert minikube på egne lab-PCer. Minikube lager et virtuelt kubernetescluster som tillater å teste funksjoner som finnes i fullt oppsatte clustere.
+Derfor ble det installert minikube på egne maskiner. Minikube lager et virtuelt kubernetescluster som tillater å teste funksjoner som finnes i fullt oppsatte clustere.
 
 For installasjon av minikube, ble [installasjonsguiden _(https://minikube.sigs.k8s.io/docs/start/)_](https://minikube.sigs.k8s.io/docs/start/) til "The Kubernetes Authors" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
