@@ -3,34 +3,24 @@
 
 **Innhold:**
 1. [Innledning](#1-innledning)
-2. [Gjennomføring av test tre](#2-gjennomføring-av-test-3)  
-2.1 [For å få like resultater](#21-for-å-få-like-resultater)  
-2.2 [Fremgangsmåte](#22-fremgangsmåte)
+2. [Fremgangsmåte og gjennomføring](#2-fremgangsmåte-og-gjennomføring)  
 3. [Forklaring av teknisk innhold](#3-forklaring-av-teknisk-innhold)  
-3.1 [php-apache.yaml](#31-php-apacheyaml)  
-3.2 [hpa-php-apache.yaml](#32-hpa-php-apacheyaml)  
-3.3 [Lastgenerering med BusyBox](#33-lastgenerering-med-BusyBox)
-
+3.1. [php-apache.yaml](#31-php-apacheyaml)  
+3.2. [hpa-php-apache.yaml](#32-hpa-php-apacheyaml)  
+3.3. [Lastgenerering med BusyBox](#33-lastgenerering-med-busybox)  
 
 
 <br>
 <br>
 
 # 1 Innledning
-Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/), og er en detaljert veiledning i hvordan test tre ble gjennomført!
+Denne testen er basert på [HorizontalPodAutoscaler Walkthrough _(https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)_](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/), og er en detaljert veiledning i hvordan test tre ble gjennomført!
+
+> **MERK:** _Se [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md) for å se hvor og hvilke versjoner av kildekodene som tilhører test tre_
 
 <br>
 <br>
 
-# 2 Gjennomføring av test tre:
-
-### Pre-install:
-- Kubernetes _cluster_ → minikube
-- Kubectl
-- Docker
-
-
-## 2.1 For å få like resultater:
 1. Åpne to Terminalvinduer, heretter referert til Terminal A og Terminal B 
 2. Følg testinstruksene under frem til punkt `6. Overvåk HPA i Terminal A:`
 3. Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
@@ -39,11 +29,15 @@ Denne testen er basert på [HorizontalPodAutoscaler Walkthrough](https://kuberne
 
 <br>
 
-## 2.2 Fremgangsmåte
-### 1. Start minikube med denne kommandoen i Terminal A:
+# 2 Fremgangsmåte og gjennomføring
+Åpne to terminalvinduer, heretter referert til terminal A og terminal B.
+
+Start minikube med denne kommandoen i terminal A:
 ```
 $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10s
 ```
+<br>
+
 For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet.housekeeping-interval=10s` være med under oppstart av minikube.
 
 Svar fra kommandoen:
@@ -72,15 +66,21 @@ Svar fra kommandoen:
 ```shell
 $ minikube addons enable metrics-server
 ```
+<br>
+
 Svar fra kommandoen:
 ```
     ▪ Using image k8s.gcr.io/metrics-server/metrics-server:v0.4.2
 🌟  The 'metrics-server' addon is enabled
 ```
+<br>
+
 For å se om metrics-server fungerer:
 ```shell
 $ kubectl top pods -n kube-system            
 ```
+<br>
+
 Svar fra kommandoen vil være noe lik denne:
 ```
 NAME                               CPU(cores)   MEMORY(bytes)   
@@ -99,6 +99,7 @@ storage-provisioner                2m           9Mi
 ```shell
 $ kubectl apply -f php-apache.yaml
 ```
+<br>
 
 Svar fra kommandoen:
 ```
@@ -111,21 +112,28 @@ service/php-apache created
 ```shell
 $ kubectl apply -f hpa-php-apache.yaml
 ```
+<br>
+
 Svar fra kommandoen:
 ```
 horizontalpodautoscaler.autoscaling/php-apache created
 ```
+<br>
 
 Sjekk status til HPA:
 ```shell
 $ kubectl get hpa
 ```
+<br>
+
 Dette kan ta ett minutt eller to før den registreres. Legg merke til `<unknown>` og `<0%>`, den fungerer når det vises `<0%>`
 Svar fra kommandoen med engang:
 ```
 NAME         REFERENCE               TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
 php-apache   Deployment/php-apache   <unknown>/50%   1         10        0          12s
 ```
+<br>
+
 Svar fra kommandoen etter ett minutt:
 ```
 NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
@@ -138,6 +146,8 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          70
 ```shell
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
+<br>
+
 Svar fra kommandoen:
 ```
 If you don't see a command prompt, try pressing enter.
@@ -149,6 +159,8 @@ OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK
 ```shell
 $ kubectl get hpa php-apache --watch
 ```
+<br>
+
 Denne kommandoen kjøres på et intervall på 15 sekunder.
 
 Svar fra kommandoen etter noen minutter:
@@ -172,6 +184,8 @@ php-apache   Deployment/php-apache   51%/50%   1         10        7          3m
 ```
 $ <ctrl> + c
 ```
+<br>
+
 Svar fra kommandoen:
 ```
 OK!OK!OK!OK!OK!^Cpod "load-generator" deleted
@@ -183,7 +197,10 @@ pod default/load-generator terminated (Error)`
 ```shell
 $ kubectl get hpa php-apache --watch  
 ```
+<br>
+
 Når HPA detekterer at CPU=0% skalerer den automatisk ned til 1 replika. Dette kan ta noen minutter.
+
 
 Svar fra kommandoen:
 ```
@@ -211,6 +228,8 @@ FROM php:5-apache
 COPY index.php /var/www/html/index.php
 RUN chmod a+rx index.php
 ```
+<br>
+
 Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye CPU. Dette er for å simulere lasten i _clusteret_ vårt og er som følger:
 ```
 <?php
@@ -228,6 +247,8 @@ Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom én 
 ```
 ønsketreplikeringer = ceil[GjeldendeReolikas * ( GjeldendeMetriskVerdi / ØnsketMetriskVerdi )]
 ```
+<br>
+
 Hvis skaleringsforholdet befinner seg nært 1.0 så vil _control plane_ hoppe over skaleringen.
 <br>
 
