@@ -1,3 +1,3 @@
 # Vedlegg D - Resultater Test én
 
-Resultatene tilknyttet test én er en databasetabell med 204341 rader. Dette vil ikke være hensiktsmessig å skrive ut, og vil derfor kun være tilgjengelig i digital form. Resultatet kan finnes i et repo på GitHub med denne lenken: https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20E%20-%20Resultater%20Test%20%C3%A9n.ods 
+Resultatene tilknyttet test én er en databasetabell med 204341 rader. Dette vil ikke være hensiktsmessig å skrive ut, og vil derfor kun være tilgjengelig i digital form. Resultatet kan finnes i et repo på GitHub med denne lenken: https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/4beb9bf0930bc6f4b9155ca8749d3d36d102b204/Vedlegg%20D%20-%20Resultater%20Test%20%C3%A9n.ods
