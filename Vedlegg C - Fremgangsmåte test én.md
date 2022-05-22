@@ -9,7 +9,9 @@
 <br>
 
 # 1. Introduksjon
-Dette er en detaljert veiledning i hvordan test én ble gjennomført! Denne fremgangsmåten går ut ifra at alle filer som er nødvendige for å eksekvere test én, er lastet ned til hjem-mappen på lab-PCen. "`~/`"
+Dette er en detaljert veiledning i hvordan test én ble gjennomført! Denne fremgangsmåten går ut ifra at alle filer som er nødvendige for å eksekvere test én, er lastet ned til hjem-mappen på maskinen. "`~/`"
+> **Merk:** _Se [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md) for å se hvor og hvilke versjoner av filene som tilhører test én_
+
 <br>
 <br>
 
@@ -52,7 +54,8 @@ Testen vil lagre sine resultater i mappen hvor kjører _skript.sh_ ifra. Siden _
 <br>
 
 # 3. Gjennomføring
-Under vil seks figurer listes opp, hvor tittelen til hver figur er en kort beskrivelse av når figuren ble tatt, eller hva som kan sees på figuren.
+Under vil seks figurer listes opp, hvor tittelen til hver figur er en kort beskrivelse av når figuren ble tatt eller hva som kan observeres på figuren.
+Alle figurene er tatt underveis i _skript.sh_ sin utførelse. 
 
 <br>
 
@@ -93,4 +96,4 @@ Under vil seks figurer listes opp, hvor tittelen til hver figur er en kort beskr
 <br>
 
 
-> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden og kommentarene som er skrevet der._
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
