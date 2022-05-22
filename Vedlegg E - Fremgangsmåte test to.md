@@ -4,7 +4,7 @@
 1. [Introduksjon](#1-introduksjon)
 2. [BasiskonProgrambare](#2-programvare)
 3. [Oppsett](#3-oppsett)  
-3.1. [Forklaring av scriptene](#31-forklaring-av-scriptene)  
+3.1. [Forklaring av teknisk innhold](#31-forklaring-av-teknisk-innhold)  
 3.1.1. [test-gjennomføring.sh](#311-test-gjennomføringsh)  
 3.1.2. [req.py](#312-reqpy)  
 
@@ -71,7 +71,7 @@ $ ./test-gjennomføring $(minikube ip) 30001 200 10 $HOME/git sj $HOME/git
 <br>
 
 
-## 3.1 Forklaring av scriptene
+## 3.1 Forklaring av teknisk innhold:
 Scriptene som forklares under er lagd ifb. med mikrotjenesten python-script-get. [Kapittel 1](#1-introduksjon) forklarer hvor scriptene kan finnes. 
 
 <br>
@@ -79,7 +79,7 @@ Scriptene som forklares under er lagd ifb. med mikrotjenesten python-script-get.
 ### 3.1.1 test-gjennomføring.sh
 Dette er et script som vil gjøre hele testen selv. Det har tre `for`-løkker inne i hverandre som hører til antall podder, antall tråder og antall gjennomføringer. Nedenfor er et utsnitt av de viktigste linjene fra scriptet.
 
-```shell
+```bash
 for pod in {1..10}
     do
         minikube kubectl -- scale --replicas=$pod -f $path/k8s-bachelor/k8s-config/django/django-deployment.yaml
@@ -130,6 +130,7 @@ for i in range(args.thr):
     t.start()
 ```
 [...]
+
 ```python
 if args.thr != 0:
     while value < args.antall:
@@ -139,7 +140,7 @@ if args.thr != 0:
                     value += 1
                 if value % 50 == 0:
                     print(f"Det er gjennomført {value}/{args.antall} tester.")
-    ```
+```
 <br>
 
-
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_

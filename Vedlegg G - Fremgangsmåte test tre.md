@@ -21,27 +21,19 @@ Denne testen er basert på [HorizontalPodAutoscaler Walkthrough _(https://kubern
 <br>
 <br>
 
-1. Åpne to Terminalvinduer, heretter referert til Terminal A og Terminal B 
-2. Følg testinstruksene under frem til punkt `6. Overvåk HPA i Terminal A:`
-3. Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
-4. Deretter følges testinstruksene videre fra punkt `7. Stopp lasten BusyBox genererer i Terminal B:`
-5. Overvåk autoskaleringen frem til den går ned til én replika.
-
-<br>
-
 # 2 Fremgangsmåte og gjennomføring
 Åpne to terminalvinduer, heretter referert til terminal A og terminal B.
 
-Start minikube med denne kommandoen i terminal A:
-```
+### 1. Start minikube med denne kommandoen i terminal A:
+```shell
 $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10s
 ```
 <br>
 
-For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet.housekeeping-interval=10s` være med under oppstart av minikube.
+For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet.housekeeping-interval=10s` være med i oppstart av minikube.
 
 Svar fra kommandoen:
-```
+```shell
 😄  minikube v1.25.1 on Ubuntu 20.04
 🎉  minikube 1.25.2 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.25.2
 💡  To disable this notice, run: 'minikube config set WantUpdateNotification false'
@@ -82,7 +74,7 @@ $ kubectl top pods -n kube-system
 <br>
 
 Svar fra kommandoen vil være noe lik denne:
-```
+```shell
 NAME                               CPU(cores)   MEMORY(bytes)   
 coredns-64897985d-q52bj            3m           13Mi            
 etcd-minikube                      25m          48Mi            
@@ -95,47 +87,49 @@ storage-provisioner                2m           9Mi
 ```
 <br>
 
-### 3. Start Deployment og eksponer Serivcen:
+### 3. Start _Deployment_ og eksponer _Serivcen_:
 ```shell
 $ kubectl apply -f php-apache.yaml
 ```
 <br>
 
 Svar fra kommandoen:
-```
+```shell
 deployment.apps/php-apache created
 service/php-apache created
 ```
 <br>
 
-### 4. Lag den horisontalepodautoskalereren og sjekk current status:
+### 4. Lag HPA og sjekk _current_ status:
 ```shell
 $ kubectl apply -f hpa-php-apache.yaml
 ```
 <br>
 
 Svar fra kommandoen:
-```
+```shell
 horizontalpodautoscaler.autoscaling/php-apache created
 ```
 <br>
 
-Sjekk status til HPA:
+Så sjekkes status til HPA med en gang:
 ```shell
 $ kubectl get hpa
 ```
 <br>
-
-Dette kan ta ett minutt eller to før den registreres. Legg merke til `<unknown>` og `<0%>`, den fungerer når det vises `<0%>`
-Svar fra kommandoen med engang:
-```
+  
+Svar fra kommandoen:
+```shell
 NAME         REFERENCE               TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
 php-apache   Deployment/php-apache   <unknown>/50%   1         10        0          12s
 ```
+
+Legg merke til `<unknown>`. Dette kan skje hvis statusen sjekkes, før HPA er ferdig deployert. Derfor ble de spurt om status inntil `0%` vises. HPA fungerer selv om `0%` vises.
+
 <br>
 
 Svar fra kommandoen etter ett minutt:
-```
+```shell
 NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 php-apache   Deployment/php-apache   0%/50%    1         10        1          70s
 ```
@@ -180,8 +174,12 @@ php-apache   Deployment/php-apache   51%/50%   1         10        7          3m
 ```
 <br>
 
+Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
+
+<br>
+
 ### 7. Stopp lasten BusyBox genererer i Terminal B:
-```
+```shell
 $ <ctrl> + c
 ```
 <br>
@@ -218,12 +216,13 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          10
 <br>
 
 # 3 Forklaring av teknisk innhold:
-Her blir det  en mer detaljert beskrivelse av de forskjellige tekniske komponentene i testen. Det vil ikke bli gjort en detaljert linje-for-linje beskrivelse av .yaml-filene.
+Her er en mer detaljert beskrivelse av de forskjellige tekniske komponentene i testen. Det vil ikke bli gjort en detaljert linje-for-linje beskrivelse av .yaml-filene.
+[Kapittel 1](#1-innledning) forklarer hvor scriptene kan finnes. 
 <br>
 
 ## 3.1 php-apache.yaml
-Denne filen lager en Deployment og eksponerer den som en _Service_. _Deploymenten_ henter et ferdiglaget php-apache-image fra Docker Hub. Image er `k8s.gcr.io/hpa-example` og har php-image-versjon `php:5-apache` og er bygget opp slikt:
-```
+Denne filen lager en _Deployment_ og eksponerer den med en _Service_. _Deploymenten_ henter et ferdiglaget php-apache image fra Docker Hub. Imaget er `k8s.gcr.io/hpa-example` og har php-image versjon `php:5-apache` og er bygget opp ved hjelp av en Dockerfile som inneholder:
+```yaml
 FROM php:5-apache
 COPY index.php /var/www/html/index.php
 RUN chmod a+rx index.php
@@ -231,7 +230,7 @@ RUN chmod a+rx index.php
 <br>
 
 Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye CPU. Dette er for å simulere lasten i _clusteret_ vårt og er som følger:
-```
+```php
 <?php
   $x ) 0.0001;
   for ($i = 0; $i <= 1000000; $i++) {
@@ -243,14 +242,16 @@ Koden over refererer til en `index.php`-side som utfører komplekse regnestykker
 <br>
 
 ## 3.2 hpa-php-apache.yaml
-Denne filen konstruerer en horisontal autoskalerer som vedlikeholder mellom én og ti replikeringer av podder som blir kontrollert av _Deploymenten_ php-apache. Denne HPA-en vil da enten øke eller minke antall replikeringer for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle poder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikeringer baserer seg på forholdet mellom ønsket metricsverdi og gjeldende metricsverdi hentet fra `metrics-server`. Den forenklede algoritmen er som følger:
+Denne filen konstruerer en HPA som inneholder beskrivelser om at _Deploymenten_ php-apache skal ha minst én pod og maks ti podder. Denne HPA-en vil enten øke eller minke antall replikeringer innenfor dette intervallet, for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle podder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikeringer baserer seg på forholdet mellom ønsket metrics-verdi og gjeldende metrics-verdi hentet fra `metrics-server`. Her vises algoritmen, som er forenklet for å lett kunne forstå hva den gjør:
+```yaml
+ønsketreplikeringer = ceil[GjeldendeReplikas * ( GjeldendeMetricVerdi / ØnsketMetricVerdi )]
 ```
-ønsketreplikeringer = ceil[GjeldendeReolikas * ( GjeldendeMetriskVerdi / ØnsketMetriskVerdi )]
-```
-<br>
-
-Hvis skaleringsforholdet befinner seg nært 1.0 så vil _control plane_ hoppe over skaleringen.
+Funksjonen `ceil[]` runder opp til neste heltall.
 <br>
 
 ## 3.3 Lastgenerering med BusyBox
-For å generere en økt last mot php-apache servicen, så blir dette utført via `kubectl run`-kommandoen. Denne lar oss eksekvere en lastgenerator som heter BusyBox. Her henter den image busybox:1.28. Videre utfører kommandoen en uendelig løkke som sender forespørsler til `http://php-apache`. 
+For å generere en økt last mot php-apache servicen, eksekveres en lastgenerator som heter BusyBox. Den henter et image busybox:1.28 og oppretter en pod som sender forespørsler til `http://php-apache` helt til podden termineres manuelt.
+
+<br>
+
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
