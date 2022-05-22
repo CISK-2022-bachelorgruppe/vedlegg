@@ -1,3 +1,0 @@
-# Vedlegg D - Resultater Test én
-
-Resultatene tilknyttet test to er fordelt på 1000 filer. Dette vil ikke være hensiktsmessig å skrive ut, og vil derfor kun være tilgjengelig i digital form. Resultatet kan finnes i et repo på GitHub med denne lenken: https://github.com/CISK-2022-bachelorgruppe/applikasjoner/tree/6870f32a3df8157a76c1bfc61cb7c95345467e06/python-script-get/resultater/Opprinnelige%20resultater/1651312616

@@ -1,5 +1,5 @@
 
-# Vedlegg G - Fremgangsmåte Test tre
+# Vedlegg G - Fremgangsmåte test tre
 
 **Innhold:**
 1. [Innledning](#1-innledning)

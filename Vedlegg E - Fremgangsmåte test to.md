@@ -1,4 +1,4 @@
-# Vedlegg E - Fremgangsmåte Test to
+# Vedlegg E - Fremgangsmåte test to
 
 **Innhold:**
 1. [Introduksjon](#1-introduksjon)
