@@ -149,8 +149,8 @@ $ minikube kubectl -- get pods -A
 <br>
 
 ## 4 K8s konfigurasjon
-For å kjøre opp applikasjonen, beskrevet i bachelorrapporten kapittel 4.1, i K8s er det benyttet YAML-filer. Disse
-YAML-filene ligger i repoet _kubernetes-config_.
+For å kjøre opp applikasjonen, beskrevet i bachelorrapporten kapittel 4.1, i K8s er det benyttet yaml-filer. Disse
+yaml-filene ligger i repoet _kubernetes-config_.
 
 <br>
 
@@ -158,7 +158,7 @@ YAML-filene ligger i repoet _kubernetes-config_.
 Til django-applikasjonen benyttes kun objektene _Deployment_ og _Service_. _Deploymenten_ henter et Docker image fra Docker Hub som er utviklet ifb. med dette prosjektet. Docker imaget som er benyttet er [sjohans1/django-bachelor:6.0](https://hub.docker.com/r/sjohans1/django-bachelor/).
 I tillegg er det definert fem miljøvariabler i denne _Deploymenten_. Dette er variabler som setter opp forbindelse med mysql-tjenesten og inneholder databasenavn, databasebruker, databasebrukerens passord, databasens IP/DNS og databasens port. _Servicen_ er satt opp som en NodePort og gir derfor tilgang til django-applikasjonen ved hjelp av en port. Denne gjør slik at _django-entrypoint_, som er navnet på _Servicen_, blir eksponert som på porten 30001. Dette vil si at det går an å nå tjenesten fra utsiden av K8s _clusteret_ ved hjelp av ip-adressen til minikube og porten 30001.
 
- Når YAML-filene skal legges inn i K8s blir
+ Når yaml-filene skal legges inn i K8s blir
 _kustomization.yaml_ benyttet. Dette bidrar til at kun én kommando må skrives for å deployere én
 mikrotjeneste. Skal mikrotjenesten django-applikasjon deployeres, vil det derfor være nok å ha
 en terminal åpen i mappen django i _kubernetes-config_-repoet og kjøre kommandoen: 
