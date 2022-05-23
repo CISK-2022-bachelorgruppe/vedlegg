@@ -254,4 +254,4 @@ For å generere en økt last mot php-apache servicen, eksekveres en lastgenerato
 
 <br>
 
-> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden som finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
