@@ -1,9 +1,15 @@
 # Vedlegg C - Fremgangsmåte test én
 
 **Innhold:**
-- [1. Introduksjon](#1-introduksjon)
-- [2. Fremgangsmåte](#2-fremgangsmåte)
-- [3. Gjennomføring](#3-gjennomføring)
+1. [Introduksjon](#1-introduksjon)
+2. [Fremgangsmåte](#2-fremgangsmåte)
+3. [Gjennomføring](#3-gjennomføring)  
+\- [Ved testens start](#ved-testens-start)  
+\- [Sched er deployert](#sched-er-deployert)  
+\- [Pod 5 ble akkurat slettet](#pod-5-ble-akkurat-slettet)  
+\- [Figuren viser at pod 18 lages](#figuren-viser-at-pod-18-lages)  
+\- [Sched termineres](#sched-termineres)  
+\- [Testen er ferdig](#testen-er-ferdig)  
 
 <br>
 <br>
