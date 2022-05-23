@@ -19,7 +19,7 @@
 
 Dette vedlegget tar for seg hvordan maskinene ble konfigurert til å gjennomføre testene.  
 
-I prosjektet ble tre like maskiner benyttet. Disse ble utdelt av CISK og modellen er en ThinkBook
+I prosjektet ble tre like maskiner benyttet. Disse ble utdelt av Cyberingeniørskolen og modellen er en ThinkBook
 14 G2 ITL. Alle maskinene har samme maskinvare, men det er forekomster av ulike versjoner med
 tanke på OS og programmer. Maskinvaren til maskinene er:
 * 16GB RAM
@@ -61,7 +61,7 @@ _For å se hvilke versjoner av de ulike programvarene som ble installert, se [Ta
 <br>
 
 ### 3.1 Docker
-Docker blir i dette prosjektet benyttet som en driver for minikube og må derfor installeres før
+I dette prosjektet blir Docker benyttet som en driver for minikube og må derfor installeres før
 minikube. For installasjon av Docker, ble [installasjonsguiden _(https://docs.docker.com/engine/install/ubuntu/)_](https://docs.docker.com/engine/install/ubuntu/) til Docker Inc fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
@@ -111,9 +111,9 @@ Nå er Docker installert på maskinen.
 
 <br>
 
-### 3.2 Minikube
+### 3.2 minikube
 For å utføre konseptbevisene som er laget, trengs et K8s _cluster_. På grunn av bacheloroppgavens tidsbegrensning var det ikke tid nok til å sette opp et fullskala K8s _cluster_.
-Derfor ble det installert minikube på egne maskiner. Minikube lager et virtuelt K8s _cluster_ som tillater å teste funksjoner som finnes i fullt oppsatte _clustere_.
+Derfor ble det installert minikube på egne maskiner. minikube lager et virtuelt K8s _cluster_ som tillater å teste funksjoner som finnes i fullt oppsatte _clustere_.
 
 For installasjon av minikube, ble [installasjonsguiden _(https://minikube.sigs.k8s.io/docs/start/)_](https://minikube.sigs.k8s.io/docs/start/) til "The Kubernetes Authors" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
