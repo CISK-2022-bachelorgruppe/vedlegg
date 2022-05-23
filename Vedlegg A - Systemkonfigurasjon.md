@@ -3,8 +3,18 @@
 **Innhold:**
 1. [Generelt](#1-generelt)
 2. [GitHub](#2-github)
-3. [Basiskonfigurasjon](#3-basiskonfigurasjon)
-4. [K8s konfigurasjon](#4-K8s-konfigurasjon)
+3. [Basiskonfigurasjon](#3-basiskonfigurasjon)  
+3.1. [Docker](#31-docker)  
+3.2. [minikube](#32-minikube)  
+4. [K8s konfigurasjon](#4-K8s-konfigurasjon)  
+4.1. [django-applikasjon](#41-django-applikasjon)  
+4.2 [mysql](#42-mysql)  
+4.3 [sched-applikasjon](#43-sched-applikasjon)
+
+<br>
+<br>
+
+
 ## 1 Generelt
 
 Dette vedlegget tar for seg hvordan maskinene ble konfigurert til å gjennomføre testene.  
