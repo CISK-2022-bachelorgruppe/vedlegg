@@ -12,13 +12,11 @@
 \- [Testen er ferdig](#testen-er-ferdig)  
 
 <br>
-<br>
 
 # 1. Introduksjon
 Dette er en detaljert veiledning i hvordan test én ble gjennomført! Denne fremgangsmåten går ut ifra at alle filer som er nødvendige for å eksekvere test én, er lastet ned til hjem-mappen på maskinen. "`~/`"
 > **MERK:** _Se [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md) for å se hvor og hvilke versjoner av kildekodene som tilhører test én_
 
-<br>
 <br>
 
 # 2. Fremgangsmåte

@@ -31,7 +31,7 @@ $ minikube start --driver docker --extra-config=kubelet.housekeeping-interval=10
 <br>
 
 For at metrics-server skal fungere i neste steg, så må `--extra-config=kubelet.housekeeping-interval=10s` være med i oppstart av minikube.
-
+<br><br><br><br><br><br><br><br>
 Svar fra kommandoen:
 ```shell
 😄  minikube v1.25.1 on Ubuntu 20.04
@@ -111,8 +111,9 @@ Svar fra kommandoen:
 horizontalpodautoscaler.autoscaling/php-apache created
 ```
 <br>
-
+<br><br><br><br>
 Så sjekkes status til HPA med en gang:
+
 ```shell
 $ kubectl get hpa
 ```
@@ -214,6 +215,7 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          10
 ```
 <br>
 <br>
+<br><br><br><br><br><br>
 
 # 3 Forklaring av teknisk innhold:
 Her er en mer detaljert beskrivelse av de forskjellige tekniske komponentene i testen. Det vil ikke bli gjort en detaljert linje-for-linje beskrivelse av .yaml-filene.

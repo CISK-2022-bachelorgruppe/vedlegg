@@ -41,15 +41,12 @@ OS. [Tabell 1](#tabell-1-oversikt-maskiner) viser hvilke versjoner av operativsy
 |   C   |   Ubuntu 20.04.4 LTS  | 20.10.14          |   v1.25.2             |   v1.23.3         |
 
 
-<br>
+<br><br>
 
 ## 2 GitHub
 Git ble benyttet til versjonskontroll av applikasjonen som er laget og et fellesområde hvor filer tilknyttet dette prosjektet er blitt lagret. Alle konfigurasjonsfiler, applikasjoner og vedlegg ligger i GitHub. Alle repoene er samlet i en organisasjon som finnes på denne lenken: https://github.com/CISK-2022-bachelorgruppe
 
 Organisasjonen inneholder tre repoer. Dette er [applikasjoner](https://github.com/CISK-2022-bachelorgruppe/applikasjoner), [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config) og [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg).
-
-<br>
-<br>
 
 ## 3 Basiskonfigurasjon
 Dette kapitlet tar for seg basiskonfigurasjon på maskinene som ble benyttet i prosjektet. Dette er for å kunne lage et tilnærmet likt labmiljø som er benyttet i dette prosjektet, og for å kunne ha likt utgangspunkt for testing. I basiskonfigurasjonen ligger det hovedsakelig to programmer. Dette er Docker og Minikube.
