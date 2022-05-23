@@ -1,9 +1,9 @@
 # Vedlegg B - Kildekode
 **Innhold:**
-* [Tabell 1](#tabell-1-gitrepo-oppsummering)
-* [Tabell 2](#tabell-2-gitrepo-versjoner-test-én)
-* [Tabell 3](#tabell-3-gitrepo-versjoner-test-to)
-* [Tabell 4](#tabell-4-gitrepo-versjoner-test-tre)
+* [Tabell 1: Gitrepo oppsummering](#tabell-1-gitrepo-oppsummering)
+* [Tabell 2: Gitrepo versjoner test én](#tabell-2-gitrepo-versjoner-test-én)
+* [Tabell 3: Gitrepo versjoner test to](#tabell-3-gitrepo-versjoner-test-to)
+* [Tabell 4: Gitrepo versjoner test tre](#tabell-4-gitrepo-versjoner-test-tre)
 
 <br>
 
