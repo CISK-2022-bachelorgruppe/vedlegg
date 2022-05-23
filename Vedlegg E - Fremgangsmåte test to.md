@@ -13,7 +13,7 @@
 <br>
 
 # 1. Introduksjon
-Dette vedlegget tar for seg en detaljert beskrivelse av både kode og gjennomføring til test 2.
+Dette vedlegget tar for seg en detaljert beskrivelse av både kode og gjennomføring til test 2. Testen ble gjennomført på maskin B.
 > **MERK:** _Se [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md) for å se hvor og hvilke versjoner av kildekodene som tilhører test to_
 
 <br>
