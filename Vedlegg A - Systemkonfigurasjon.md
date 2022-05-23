@@ -150,7 +150,7 @@ $ minikube kubectl -- get pods -A
 
 ## 4 K8s konfigurasjon
 For å kjøre opp applikasjonen, beskrevet i bachelorrapporten kapittel 4.1, i K8s er det benyttet yaml-filer. Disse
-yaml-filene ligger i repoet _kubernetes-config_.
+yaml-filene ligger i repoet _kubernetes-config_, se [_Vedlegg B - Kildekode_](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md).
 
 <br>
 
