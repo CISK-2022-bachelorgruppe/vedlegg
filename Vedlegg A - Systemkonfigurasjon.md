@@ -177,7 +177,7 @@ I _Secret_ defineres passordet til databasebrukeren, mens i _ConfigMap_ bestemme
 
 _StatefulSettet_ henter et Docker image, på samme måte som django-applikasjonen over, fra Docker Hub. Imaget er derimot ikke spesielt utviklet til dette prosjektet og er derfor et offisielt Docker image av mysql. Docker imaget og versjonen som er benyttet er mysql:5.7. Siden dette er et _StatefulSet_ er det montert et volum som bidrar til persistent lagring av data. Det er også definert en _PersistentVolumeClaim_ i _StatefulSettet_ som kobles opp mot _PersistentVolumet_. 
 
-I tillegg er det definert to miljøvariabler. Disse variablene ligger ikke i selve _StatefulSettet_, men de ligger i objektene _Secret_ og _ConfigMap_. Variablene bestemmer databasepassordet til databasen og databasenavnet til databasen som skal opprettes ved deployering av dette _StatefulSettet_. _Service_ er en vanlig ClusterIP K8s _service_, noe som gjør at databasen kun kan aksesseres fra
+I tillegg er det definert to miljøvariabler. Disse variablene ligger ikke i selve _StatefulSettet_, men de ligger i objektene _Secret_ og _ConfigMap_. Variablene bestemmer databasepassordet til databasen og databasenavnet til databasen som skal opprettes ved deployering av dette _StatefulSettet_. _Service_ er en vanlig ClusterIP K8s _Service_, noe som gjør at databasen kun kan aksesseres fra
 innsiden av K8s _clusteret_.
 
 <br>
