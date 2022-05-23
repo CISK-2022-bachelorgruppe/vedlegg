@@ -1,4 +1,12 @@
 # Vedlegg B - Kildekode
+**Innhold:**
+* [Tabell 1](#tabell-1-gitrepo-oppsummering)
+* [Tabell 2](#tabell-2-gitrepo-versjoner-test-én)
+* [Tabell 3](#tabell-3-gitrepo-versjoner-test-to)
+* [Tabell 4](#tabell-4-gitrepo-versjoner-test-tre)
+
+<br>
+
 
 Kildekodene danner mange ulike filer og er ikke hensiktsmessig å skrive ut. Kildekodene kan derimot finnes på internett i GitHub hvor de er samlet i en organisasjon som finnes på denne lenken: https://github.com/CISK-2022-bachelorgruppe. For hver test ble det benyttet forskjellig kildekode så for å finne riktig kildekode til riktig test, se tabell [2](#tabell-2-gitrepo-versjoner-test-én), [3](#tabell-3-gitrepo-versjoner-test-to) og [4](#tabell-4-gitrepo-versjoner-test-tre).
 
@@ -10,8 +18,8 @@ Kildekodene danner mange ulike filer og er ikke hensiktsmessig å skrive ut. Kil
 |        Gitrepo        |        Hva finnes i repoet?                       |
 |            --         |             --                                    |
 | [applikasjoner](https://github.com/CISK-2022-bachelorgruppe/applikasjoner)         |   I dette repoet finnes egenutviklede mikrotjenester som danner én applikasjon. Mikrotjenestene er django-applikasjon, pod-sletting, python-script-get og sched.  |
-|    [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config)  |   Dette repoet inneholder alle kubernetes YAML-filer som benyttes ved deployering av f. eks. _Statefulset_, _Deployments_, _PersistentVolume_ osv.                                                |
-|   [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg)             |   Dette repoet har vedleggene til dette prosjektet, men inneholdt også YAML-filene til test 3, se [tabell 4](#tabell-4-gitrepo-versjoner-test-tre)  |
+|    [kubernetes-config](https://github.com/CISK-2022-bachelorgruppe/kubernetes-config)  |   Dette repoet inneholder alle kubernetes yaml-filer som benyttes ved deployering av f. eks. _Statefulset_, _Deployments_, _PersistentVolume_ osv.                                                |
+|   [vedlegg](https://github.com/CISK-2022-bachelorgruppe/vedlegg)             |   Dette repoet har vedleggene til dette prosjektet, men inneholdt også yaml-filene til test 3, se [tabell 4](#tabell-4-gitrepo-versjoner-test-tre)  |
 
 <br>
 <br>
