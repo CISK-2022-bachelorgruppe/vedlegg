@@ -2,7 +2,7 @@
 
 **Innhold:**
 1. [Introduksjon](#1-introduksjon)
-2. [BasiskonProgrambare](#2-programvare)
+2. [Programvare](#2-programvare)
 3. [Oppsett](#3-oppsett)  
 3.1. [Forklaring av teknisk innhold](#31-forklaring-av-teknisk-innhold)  
 3.1.1. [test-gjennomføring.sh](#311-test-gjennomføringsh)  
