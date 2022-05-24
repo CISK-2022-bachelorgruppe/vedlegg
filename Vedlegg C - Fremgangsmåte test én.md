@@ -1,15 +1,21 @@
 # Vedlegg C - Fremgangsmåte test én
 
 **Innhold:**
-- [1. Introduksjon](#1-introduksjon)
-- [2. Fremgangsmåte](#2-fremgangsmåte)
-- [3. Gjennomføring](#3-gjennomføring)
+1. [Introduksjon](#1-introduksjon)
+2. [Fremgangsmåte](#2-fremgangsmåte)
+3. [Gjennomføring](#3-gjennomføring)  
+\- [Ved testens start](#ved-testens-start)  
+\- [Sched er deployert](#sched-er-deployert)  
+\- [Pod 5 ble akkurat slettet](#pod-5-ble-akkurat-slettet)  
+\- [Figuren viser at pod 18 lages](#figuren-viser-at-pod-18-lages)  
+\- [Sched termineres](#sched-termineres)  
+\- [Testen er ferdig](#testen-er-ferdig)  
 
 <br>
 <br>
 
 # 1. Introduksjon
-Dette er en detaljert veiledning i hvordan test én ble gjennomført! Denne fremgangsmåten går ut ifra at alle filer som er nødvendige for å eksekvere test én, er lastet ned til hjem-mappen på maskinen. "`~/`"
+Dette er en detaljert veiledning i hvordan test én ble gjennomført! Denne fremgangsmåten går ut ifra at alle filer som er nødvendige for å eksekvere test én, er lastet ned til hjem-mappen på maskinen "`~/`". Testen ble gjennomført på maskin A.
 > **MERK:** _Se [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md) for å se hvor og hvilke versjoner av kildekodene som tilhører test én_
 
 <br>
@@ -26,10 +32,10 @@ $ minikube start --driver=docker
 Når minikube var ferdiginstallert, ble utrullingen av mysql-databasen og django-applikasjonen startet med:
 ```shell
 $ cd $HOME/kubernetes-config/mysql
-$ kubectl apply -k .
+$ minikube kubectl -- apply -k .
   
 $ cd $HOME/kubernetes-config/django
-$ kubectl apply -k .
+$ minikube kubectl -- apply -k .
 ```
 <br>
 
@@ -96,4 +102,4 @@ Alle figurene er tatt underveis i _skript.sh_ sin utførelse.
 <br>
 
 
-> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden som finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_

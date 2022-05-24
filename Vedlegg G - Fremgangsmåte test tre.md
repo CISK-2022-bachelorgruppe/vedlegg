@@ -69,7 +69,7 @@ Svar fra kommandoen:
 
 For å se om metrics-server fungerer:
 ```shell
-$ kubectl top pods -n kube-system            
+$ minikube kubectl -- top pods -n kube-system            
 ```
 <br>
 
@@ -89,7 +89,7 @@ storage-provisioner                2m           9Mi
 
 ### 3. Start _Deployment_ og eksponer _Serivcen_:
 ```shell
-$ kubectl apply -f php-apache.yaml
+$ minikube kubectl -- apply -f php-apache.yaml
 ```
 <br>
 
@@ -102,7 +102,7 @@ service/php-apache created
 
 ### 4. Lag HPA og sjekk _current_ status:
 ```shell
-$ kubectl apply -f hpa-php-apache.yaml
+$ minikube kubectl -- apply -f hpa-php-apache.yaml
 ```
 <br>
 
@@ -114,7 +114,7 @@ horizontalpodautoscaler.autoscaling/php-apache created
 
 Så sjekkes status til HPA med en gang:
 ```shell
-$ kubectl get hpa
+$ minikube kubectl -- get hpa
 ```
 <br>
   
@@ -138,7 +138,7 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          70
 
 ### 5. Generer mer last med BusyBox i Terminal B:
 ```shell
-$ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
+$ minikube kubectl -- run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
 <br>
 
@@ -151,7 +151,7 @@ OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK
 
 ### 6. Overvåk HPA i Terminal A:
 ```shell
-$ kubectl get hpa php-apache --watch
+$ minikube kubectl -- get hpa php-apache --watch
 ```
 <br>
 
@@ -174,7 +174,7 @@ php-apache   Deployment/php-apache   51%/50%   1         10        7          3m
 ```
 <br>
 
-Overvåk autoskaleringen frem til CPU er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
+Overvåk autoskaleringen frem til prosessorkraften er stabil rundt `targetCPUUtilizationPercentage=50` i 5 minutter.
 
 <br>
 
@@ -193,7 +193,7 @@ pod default/load-generator terminated (Error)`
 
 ### 8. Overvåk HPA i Terminal A og se den skalere ned:
 ```shell
-$ kubectl get hpa php-apache --watch  
+$ minikube kubectl -- get hpa php-apache --watch  
 ```
 <br>
 
@@ -229,7 +229,7 @@ RUN chmod a+rx index.php
 ```
 <br>
 
-Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye CPU. Dette er for å simulere lasten i _clusteret_ vårt og er som følger:
+Koden over refererer til en `index.php`-side som utfører komplekse regnestykker som krever mye prosessorkraft. Dette er for å simulere lasten i _clusteret_ vårt og er som følger:
 ```php
 <?php
   $x ) 0.0001;
@@ -242,7 +242,7 @@ Koden over refererer til en `index.php`-side som utfører komplekse regnestykker
 <br>
 
 ## 3.2 hpa-php-apache.yaml
-Denne filen konstruerer en HPA som inneholder beskrivelser om at _Deploymenten_ php-apache skal ha minst én pod og maks ti podder. Denne HPA-en vil enten øke eller minke antall replikeringer innenfor dette intervallet, for å opprettholde ønsket gjennomsnittlig CPU-utnyttelse på tvers av alle podder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikeringer baserer seg på forholdet mellom ønsket metrics-verdi og gjeldende metrics-verdi hentet fra `metrics-server`. Her vises algoritmen, som er forenklet for å lett kunne forstå hva den gjør:
+Denne filen konstruerer en HPA som inneholder beskrivelser om at _Deploymenten_ php-apache skal ha minst én pod og maks ti podder. Denne HPA-en vil enten øke eller minke antall replikeringer innenfor dette intervallet, for å opprettholde ønsket gjennomsnittlig prosessorutnyttelse på tvers av alle podder på cirka 50%. Algoritmen som HPA benytter for å bestemme antall replikeringer baserer seg på forholdet mellom ønsket metrics-verdi og gjeldende metrics-verdi hentet fra `metrics-server`. Her vises algoritmen, som er forenklet for å lett kunne forstå hva den gjør:
 ```yaml
 ønsketreplikeringer = ceil[GjeldendeReplikas * ( GjeldendeMetricVerdi / ØnsketMetricVerdi )]
 ```
@@ -254,4 +254,4 @@ For å generere en økt last mot php-apache servicen, eksekveres en lastgenerato
 
 <br>
 
-> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden som finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_

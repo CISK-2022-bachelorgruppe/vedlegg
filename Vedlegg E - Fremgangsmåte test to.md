@@ -2,7 +2,7 @@
 
 **Innhold:**
 1. [Introduksjon](#1-introduksjon)
-2. [BasiskonProgrambare](#2-programvare)
+2. [Programvare](#2-programvare)
 3. [Oppsett](#3-oppsett)  
 3.1. [Forklaring av teknisk innhold](#31-forklaring-av-teknisk-innhold)  
 3.1.1. [test-gjennomføring.sh](#311-test-gjennomføringsh)  
@@ -13,7 +13,7 @@
 <br>
 
 # 1. Introduksjon
-Dette vedlegget tar for seg en detaljert beskrivelse av både kode og gjennomføring til test 2.
+Dette vedlegget tar for seg en detaljert beskrivelse av både kode og gjennomføring til test 2. Testen ble gjennomført på maskin B.
 > **MERK:** _Se [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md) for å se hvor og hvilke versjoner av kildekodene som tilhører test to_
 
 <br>
@@ -143,4 +143,4 @@ if args.thr != 0:
 ```
 <br>
 
-> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden. som kan finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
+> **MERK:** _For videre informasjon om scriptene som er benyttet i dette prosjektet, les kildekoden som finnes i [Vedlegg B - Kildekode](https://github.com/CISK-2022-bachelorgruppe/vedlegg/blob/master/Vedlegg%20B%20-%20Kildekode.md)_
