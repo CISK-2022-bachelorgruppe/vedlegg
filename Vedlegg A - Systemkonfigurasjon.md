@@ -19,7 +19,7 @@
 
 Dette vedlegget tar for seg hvordan maskinene ble konfigurert til å gjennomføre testene.  
 
-I prosjektet ble tre like maskiner benyttet. Disse ble utdelt av CISK og modellen er en ThinkBook
+I prosjektet ble tre like maskiner benyttet. Disse ble utdelt av Cyberingeniørskolen og modellen er en ThinkBook
 14 G2 ITL. Alle maskinene har samme maskinvare, men det er forekomster av ulike versjoner med
 tanke på OS og programmer. Maskinvaren til maskinene er:
 * 16GB RAM
@@ -58,7 +58,7 @@ _For å se hvilke versjoner av de ulike programvarene som ble installert, se [Ta
 <br>
 
 ### 3.1 Docker
-Docker blir i dette prosjektet benyttet som en driver for minikube og må derfor installeres før
+I dette prosjektet blir Docker benyttet som en driver for minikube og må derfor installeres før
 minikube. For installasjon av Docker, ble [installasjonsguiden _(https://docs.docker.com/engine/install/ubuntu/)_](https://docs.docker.com/engine/install/ubuntu/) til Docker Inc fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
 
@@ -108,9 +108,9 @@ Nå er Docker installert på maskinen.
 
 <br>
 
-### 3.2 Minikube
+### 3.2 minikube
 For å utføre konseptbevisene som er laget, trengs et K8s _cluster_. På grunn av bacheloroppgavens tidsbegrensning var det ikke tid nok til å sette opp et fullskala K8s _cluster_.
-Derfor ble det installert minikube på egne maskiner. Minikube lager et virtuelt K8s _cluster_ som tillater å teste funksjoner som finnes i fullt oppsatte _clustere_.
+Derfor ble det installert minikube på egne maskiner. minikube lager et virtuelt K8s _cluster_ som tillater å teste funksjoner som finnes i fullt oppsatte _clustere_.
 
 For installasjon av minikube, ble [installasjonsguiden _(https://minikube.sigs.k8s.io/docs/start/)_](https://minikube.sigs.k8s.io/docs/start/) til "The Kubernetes Authors" fulgt.  
 Under vil kommandoene som ble benyttet i installasjonen bli listet opp.
@@ -152,7 +152,7 @@ yaml-filene ligger i repoet _kubernetes-config_, se [_Vedlegg B - Kildekode_](ht
 <br>
 
 ### 4.1 django-applikasjon
-Til django-applikasjonen benyttes kun objektene _Deployment_ og _Service_. _Deploymenten_ henter et Docker image fra Docker Hub som er utviklet ifb. med dette prosjektet. Docker imaget som er benyttet er [sjohans1/django-bachelor:6.0](https://hub.docker.com/r/sjohans1/django-bachelor/).
+Til django-applikasjonen benyttes kun objektene _Deployment_ og _Service_. _Deploymenten_ henter et Docker image fra Docker Hub som er utviklet ifb. med dette prosjektet. Docker imaget som er benyttet er [sjohans1/django-bachelor:6.0 _(https://hub.docker.com/r/sjohans1/django-bachelor/)_](https://hub.docker.com/r/sjohans1/django-bachelor/).
 I tillegg er det definert fem miljøvariabler i denne _Deploymenten_. Dette er variabler som setter opp forbindelse med mysql-tjenesten og inneholder databasenavn, databasebruker, databasebrukerens passord, databasens IP/DNS og databasens port. _Servicen_ er satt opp som en NodePort og gir derfor tilgang til django-applikasjonen ved hjelp av en port. Denne gjør slik at _django-entrypoint_, som er navnet på _Servicen_, blir eksponert som på porten 30001. Dette vil si at det går an å nå tjenesten fra utsiden av K8s _clusteret_ ved hjelp av ip-adressen til minikube og porten 30001.
 
  Når yaml-filene skal legges inn i K8s blir
@@ -174,7 +174,7 @@ I _Secret_ defineres passordet til databasebrukeren, mens i _ConfigMap_ bestemme
 
 _StatefulSettet_ henter et Docker image, på samme måte som django-applikasjonen over, fra Docker Hub. Imaget er derimot ikke spesielt utviklet til dette prosjektet og er derfor et offisielt Docker image av mysql. Docker imaget og versjonen som er benyttet er mysql:5.7. Siden dette er et _StatefulSet_ er det montert et volum som bidrar til persistent lagring av data. Det er også definert en _PersistentVolumeClaim_ i _StatefulSettet_ som kobles opp mot _PersistentVolumet_. 
 
-I tillegg er det definert to miljøvariabler. Disse variablene ligger ikke i selve _StatefulSettet_, men de ligger i objektene _Secret_ og _ConfigMap_. Variablene bestemmer databasepassordet til databasen og databasenavnet til databasen som skal opprettes ved deployering av dette _StatefulSettet_. _Service_ er en vanlig ClusterIP K8s _service_, noe som gjør at databasen kun kan aksesseres fra
+I tillegg er det definert to miljøvariabler. Disse variablene ligger ikke i selve _StatefulSettet_, men de ligger i objektene _Secret_ og _ConfigMap_. Variablene bestemmer databasepassordet til databasen og databasenavnet til databasen som skal opprettes ved deployering av dette _StatefulSettet_. _Service_ er en vanlig ClusterIP K8s _Service_, noe som gjør at databasen kun kan aksesseres fra
 innsiden av K8s _clusteret_.
 
 <br>
