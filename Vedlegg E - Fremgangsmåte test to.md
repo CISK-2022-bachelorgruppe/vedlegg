@@ -30,7 +30,6 @@ Versjoner for programvarer benyttet i denne testen utover det som er beskrevet i
 | pip3                          | 20.3.4    |
 
 <br>
-<br>
 
 # 3. Oppsett
 
